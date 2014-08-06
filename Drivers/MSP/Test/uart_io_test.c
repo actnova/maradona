@@ -981,7 +981,7 @@ TEST(UsartIO_DMA, OpenWhenDeviceNotOpenedMallocFail)
 
 TEST(UsartIO_DMA, Release)
 {
-//	int 												ret;
+	int 												ret;
 	struct file									file;
 	struct msp_factory 					msp = {0};
 	struct UARTEX_HandleTypeDef huartex = {0};
@@ -993,7 +993,7 @@ TEST(UsartIO_DMA, Release)
 			.tbuf_size = 17, 
 		};
 		
-	// ret = uart_device_release(&udev.dev, &file);
+	ret = uart_device_release(&udev.dev, &file);
 	
 	udev.handle = &huartex;
 	udev.testdata = &huartex;
@@ -1044,5 +1044,8 @@ TEST_GROUP_RUNNER(UsartIO_DMA)
 	RUN_TEST_CASE(UsartIO_DMA, OpenWhenDeviceNotOpenedAllSuccess);
 	RUN_TEST_CASE(UsartIO_DMA, OpenWhenDeviceNotOpenedCreateHandleFail);
 	RUN_TEST_CASE(UsartIO_DMA, OpenWhenDeviceNotOpenedMallocFail);
+	
+	// release
+	RUN_TEST_CASE(UsartIO_DMA, Release);
 }
 

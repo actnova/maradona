@@ -488,11 +488,33 @@ int	UART_IO_Open(struct device * dev, struct file * filp)
 	fail3: 	free(udev->tbuf[0]); udev->tbuf[0] = NULL;
 	fail2: 	free(udev->rbuf[1]); udev->rbuf[1] = NULL;
 	fail1:	free(udev->rbuf[0]); udev->rbuf[0] = NULL;
-	fail0:	;
+	fail0:	return ret;
+}
+
+int	uart_device_release(struct device * dev, struct file * filp)
+{
+	int ret = 0;
+	struct uart_device * udev = container_of(dev, struct uart_device, dev);
+	
+	filp->private_data = NULL;
+	filp->f_ops = NULL;
+
+	udev->handle->ops.deinit(udev->handle);
+	udev->msp->destroy_uartex_handle(udev->msp, udev->handle);
+	udev->handle = NULL;
+	
+	free(udev->tbuf[1]);
+	free(udev->tbuf[0]);
+	free(udev->rbuf[1]);
+	free(udev->rbuf[0]);
+	
+	udev->tbuf[1] = udev->tbuf[0] = udev->tx_head = udev->tx_tail = 0;
+	udev->rbuf[1] = udev->rbuf[0] = udev->rx_head = udev->rx_tail = udev->rx_upper = 0;
+	
+	udev->open_count = 0;
 	
 	return ret;
 }
-
 
 #if 0
 
