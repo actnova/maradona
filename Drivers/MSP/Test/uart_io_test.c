@@ -854,6 +854,21 @@ UARTEX_HandleTypeDef* mock_msp_create_uartex_handle_by_port(struct msp_factory *
 	return &td->uartex_handle;
 }
 
+void mock_msp_destroy_uartex_handle(struct msp_factory* msp, UARTEX_HandleTypeDef* handle)
+{
+	struct uart_device_testdata * td = (struct uart_device_testdata *)get_testdata();
+	
+	td->msp_destroy_uartex_handle_called++;
+	
+	TEST_ASSERT_EQUAL_PTR(&td->msp, msp);
+	TEST_ASSERT_EQUAL_PTR(&td->uartex_handle, handle);
+	
+	if (td->msp_destroy_uartex_handle_fail_countdown == 0)
+		return;
+	
+	return;
+}
+
 HAL_StatusTypeDef mock_uartex_handle_init(UARTEX_HandleTypeDef * hue)
 {
 	struct uart_device_testdata * td = (struct uart_device_testdata *)get_testdata();
@@ -901,6 +916,23 @@ HAL_StatusTypeDef mock_uartex_recv_success(UARTEX_HandleTypeDef * hue, uint8_t *
 	return HAL_OK;
 }
 
+HAL_StatusTypeDef mock_uartex_handle_deinit(UARTEX_HandleTypeDef * hue)
+{
+	struct uart_device_testdata * td = (struct uart_device_testdata *)get_testdata();
+	
+	td->uartex_handle_deinit_called++;
+	
+	TEST_ASSERT_EQUAL_HEX32(&td->uartex_handle, hue);
+	
+	if (td->uartex_handle_deinit_fail_countdown == 0)
+	{
+		return HAL_ERROR;
+	}
+	
+	td->uartex_handle_deinit_fail_countdown--;
+	return HAL_OK;
+}
+
 HAL_StatusTypeDef mock_uartex_handle_recv(UARTEX_HandleTypeDef * hue, uint8_t *pData, uint16_t Size)	
 {
 	struct uart_device_testdata * td = (struct uart_device_testdata *)get_testdata();
@@ -918,17 +950,6 @@ HAL_StatusTypeDef mock_uartex_handle_recv(UARTEX_HandleTypeDef * hue, uint8_t *p
 	
 	td->uartex_handle_recv_fail_countdown--;
 	return HAL_OK;
-	
-//	struct uart_device * udev;
-//	
-//	countdown--;
-//	TEST_ASSERT_NOT_NULL(hue);
-//	udev = (struct uart_device*)hue->testdata;
-//	
-//	TEST_ASSERT_EQUAL_HEX32(udev->rbuf[0], pData);
-//	TEST_ASSERT_EQUAL(udev->rbuf_size, Size);
-//	
-//	return HAL_OK;
 }
 
 static void assert_device_and_file_intact(struct uart_device * udev, struct file * filp)
@@ -1058,14 +1079,13 @@ TEST(UsartIO_DMA, OpenWhenDeviceNotOpenedMallocFail)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-//	
-//	Release When Ready, Isolated.
-//	Release When Ready, Integrated.
-//	
-
-
-//TEST(UsartIO_DMA, ReleaseWhenReadyIsolated)
-//{
+//	Release
+TEST(UsartIO_DMA, Release)
+{
+	int ret;
+	struct uart_device_testdata * td = (struct uart_device_testdata *)get_testdata();
+	TEST_ASSERT_NOT_NULL(td);	
+	
 //	int 												ret;
 //	struct file 								file = {0};
 //	struct msp_factory 					msp = {0};
@@ -1086,18 +1106,23 @@ TEST(UsartIO_DMA, OpenWhenDeviceNotOpenedMallocFail)
 //		mock_create_uartex_handle_by_port_success;						// create uartex handle
 //	huartex.ops.init = mock_uartex_init_success;						// init uart (hardware)
 //	huartex.ops.recv = mock_uartex_recv_success;						// start recv 
-//	
-//	// msp.destroy_uartex_handle = mock_destroy_uartex_handle;
-//	// huartex.ops.deinit = mock_uartex_deinit_success;
-//	
-//	// countdown = 3;
-//	
-//	// ret = UART_IO_Open(&udev.dev, &file);
-//		
-//	
-//		
-//	// assert_device_and_file_intact(&udev, &file);
-//}
+	
+	td->msp.create_uartex_handle_by_port = mock_msp_create_uartex_handle_by_port;
+	td->msp.destroy_uartex_handle = mock_msp_destroy_uartex_handle;
+	td->uartex_handle.ops.init = mock_uartex_handle_init;
+	td->uartex_handle.ops.deinit = mock_uartex_handle_deinit;
+	td->uartex_handle.ops.recv = mock_uartex_handle_recv;
+	
+	UART_IO_Open(&td->udev.dev, &td->file);
+	
+	ret = uart_device_release(&td->udev.dev, &td->file);
+	
+	TEST_ASSERT_EQUAL(0, ret);
+	TEST_ASSERT_EQUAL(1, td->uartex_handle_deinit_called);
+	TEST_ASSERT_EQUAL(1, td->msp_destroy_uartex_handle_called);
+	
+	assert_device_and_file_intact(&td->udev, &td->file);
+}
 
 /******************************************************************************
  *
@@ -1149,10 +1174,8 @@ TEST_GROUP_RUNNER(UsartIO_DMA)
 	RUN_TEST_CASE(UsartIO_DMA, OpenWhenDeviceNotOpenedCreateHandleFail);
 	RUN_TEST_CASE(UsartIO_DMA, OpenWhenDeviceNotOpenedMallocFail);	
 	RUN_TEST_CASE(UsartIO_DMA, OpenWhenDeviceNotOpenedAllSuccess);
-
-	
 	// release
-	// RUN_TEST_CASE(UsartIO_DMA, Release);
+	RUN_TEST_CASE(UsartIO_DMA, Release);
 	set_testdata(NULL);
 }
 
