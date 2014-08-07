@@ -6,11 +6,8 @@
 #include "uart_io_private.h"
 #include "devicefs.h"
 
-static int countdown;
-
 extern void* 	get_testdata(void);
 extern void 	set_testdata(void* data);
-
 
 struct uart_device_testdata {
 	
@@ -207,11 +204,11 @@ TEST(UsartIO_DMA, ReadInvalidArgs)
 	struct uart_device huio = { .rbuf_size = 64, .tbuf_size = 64, };
 	
 	/** These tests are enough, don't validate 'internal state' of opaque struct, pointless. **/
-	TEST_ASSERT_EQUAL(-1, UART_IO_Read(0, &c, 1));					/** null handle **/
+	TEST_ASSERT_EQUAL(-1, uart_device_read(0, &c, 1));					/** null handle **/
 	TEST_ASSERT_EQUAL(EINVAL, errno);
-	TEST_ASSERT_EQUAL(-1, UART_IO_Read(&huio, 0, 1));				/** null buf p	**/
+	TEST_ASSERT_EQUAL(-1, uart_device_read(&huio, 0, 1));				/** null buf p	**/
 	TEST_ASSERT_EQUAL(EINVAL, errno);
-	TEST_ASSERT_EQUAL(0, UART_IO_Read(&huio, &c, 0));				/** no error checking as linux **/
+	TEST_ASSERT_EQUAL(0, uart_device_read(&huio, &c, 0));				/** no error checking as linux **/
 }
 
 TEST(UsartIO_DMA, ReadWhenBytesToReadLessThanOrEqualToBytesInBuffer)
@@ -236,7 +233,7 @@ TEST(UsartIO_DMA, ReadWhenBytesToReadLessThanOrEqualToBytesInBuffer)
 	fill_rx_testdata(&huio, 1, 1, sample, strlen(sample), 0, 0, 0);
 	
 	memset(buf, 0, sizeof(buf));	
-	read = UART_IO_Read(&huio, buf, strlen(sample));
+	read = uart_device_read(&huio, buf, strlen(sample));
 	
 	TEST_ASSERT_EQUAL(strlen(sample), read);
 	TEST_ASSERT_EQUAL_MEMORY(sample, buf, strlen(sample));
@@ -289,7 +286,7 @@ TEST(UsartIO_DMA, ReadWhenBytesToReadMoreThanBytesInBufferAndHalReady)
 	fill_rx_testdata(&huio, 0, 1, soft, strlen(soft), hard, strlen(hard), UART_IO_BUFFER_SIZE);
 	
 	memset(buf, 0, sizeof(buf));
-	read = UART_IO_Read(&huio, buf, sizeof(buf));
+	read = uart_device_read(&huio, buf, sizeof(buf));
 	
 	TEST_ASSERT_EQUAL(strlen(soft) + strlen(hard), read);
 	TEST_ASSERT_EQUAL_STRING("testdriven", buf);
@@ -345,7 +342,7 @@ TEST(UsartIO_DMA, ReadWhenBytesToReadMoreThanBytesInBufferAndHalErrorBusyTimeout
 	huio.handle->ops.swap = swap_mock_hal_error;
 	
 	memset(buf, 0, sizeof(buf));	
-	read = UART_IO_Read(&huio, buf, sizeof(buf));
+	read = uart_device_read(&huio, buf, sizeof(buf));
 	
 	TEST_ASSERT_EQUAL(strlen(soft), read);
 	TEST_ASSERT_EQUAL_STRING(soft, buf);
@@ -356,7 +353,7 @@ TEST(UsartIO_DMA, ReadWhenBytesToReadMoreThanBytesInBufferAndHalErrorBusyTimeout
 	huio.handle->ops.swap = swap_mock_hal_busy;
 	
 	memset(buf, 0, sizeof(buf));	
-	read = UART_IO_Read(&huio, buf, sizeof(buf));
+	read = uart_device_read(&huio, buf, sizeof(buf));
 
 	TEST_ASSERT_EQUAL(strlen(soft), read);
 	TEST_ASSERT_EQUAL_STRING(soft, buf);
@@ -367,7 +364,7 @@ TEST(UsartIO_DMA, ReadWhenBytesToReadMoreThanBytesInBufferAndHalErrorBusyTimeout
 	huio.handle->ops.swap = swap_mock_hal_timeout;
 	
 	memset(buf, 0, sizeof(buf));	
-	read = UART_IO_Read(&huio, buf, sizeof(buf));
+	read = uart_device_read(&huio, buf, sizeof(buf));
 
 	TEST_ASSERT_EQUAL(strlen(soft), read);
 	TEST_ASSERT_EQUAL_STRING(soft, buf);	
@@ -405,7 +402,7 @@ TEST(UsartIO_DMA, ReadWhenBytesToReadMoreThanBytesInBufferAndHalErrorBusyTimeout
 	huio.handle->ops.swap = swap_mock_hal_error;
 	
 	memset(buf, 0, sizeof(buf));
-	read = UART_IO_Read(&huio, buf, sizeof(buf));
+	read = uart_device_read(&huio, buf, sizeof(buf));
 	
 	TEST_ASSERT_EQUAL(-1, read);
 	TEST_ASSERT_EQUAL(EINVAL, errno);	
@@ -414,7 +411,7 @@ TEST(UsartIO_DMA, ReadWhenBytesToReadMoreThanBytesInBufferAndHalErrorBusyTimeout
 	huio.handle->ops.swap = swap_mock_hal_busy;
 	
 	memset(buf, 0, sizeof(buf));
-	read = UART_IO_Read(&huio, buf, sizeof(buf));
+	read = uart_device_read(&huio, buf, sizeof(buf));
 	
 	TEST_ASSERT_EQUAL(-1, read);
 	TEST_ASSERT_EQUAL(EBUSY, errno);	
@@ -423,7 +420,7 @@ TEST(UsartIO_DMA, ReadWhenBytesToReadMoreThanBytesInBufferAndHalErrorBusyTimeout
 	huio.handle->ops.swap = swap_mock_hal_timeout;
 	
 	memset(buf, 0, sizeof(buf));
-	read = UART_IO_Read(&huio, buf, sizeof(buf));
+	read = uart_device_read(&huio, buf, sizeof(buf));
 	
 	TEST_ASSERT_EQUAL(-1, read);
 	TEST_ASSERT_EQUAL(EIO, errno);	
@@ -439,9 +436,9 @@ TEST(UsartIO_DMA, ReadWhenBytesToReadMoreThanBytesInBufferAndHalErrorBusyTimeout
 
 //TEST(UsartIO_DMA, OpenInvalidArgs)
 //{
-//	TEST_ASSERT_EQUAL(0, UART_IO_Open(0));
+//	TEST_ASSERT_EQUAL(0, uart_device_open(0));
 //	TEST_ASSERT_EQUAL(EINVAL, errno);
-//	TEST_ASSERT_EQUAL(0, UART_IO_Open(7));
+//	TEST_ASSERT_EQUAL(0, uart_device_open(7));
 //	TEST_ASSERT_EQUAL(EINVAL, errno);
 //}
 
@@ -449,7 +446,7 @@ TEST(UsartIO_DMA, ReadWhenBytesToReadMoreThanBytesInBufferAndHalErrorBusyTimeout
 //{
 //	UART_IO_SetHandle(6, 0);
 //	
-//	TEST_ASSERT_EQUAL(0, UART_IO_Open(6));
+//	TEST_ASSERT_EQUAL(0, uart_device_open(6));
 //	TEST_ASSERT_EQUAL(ENODEV, errno);
 //}
 
@@ -457,7 +454,7 @@ TEST(UsartIO_DMA, ReadWhenBytesToReadMoreThanBytesInBufferAndHalErrorBusyTimeout
 //{
 //	m_huio.handle = 0;
 //	UART_IO_SetHandle(6, &m_huio);
-//	TEST_ASSERT_EQUAL(0, UART_IO_Open(6));
+//	TEST_ASSERT_EQUAL(0, uart_device_open(6));
 //}
 
 //TEST(UsartIO_DMA, OpenHalNotResetState)
@@ -466,7 +463,7 @@ TEST(UsartIO_DMA, ReadWhenBytesToReadMoreThanBytesInBufferAndHalErrorBusyTimeout
 //	
 //	UART_IO_SetHandle(6, &m_huio);
 //	
-//	TEST_ASSERT_EQUAL(0, UART_IO_Open(6));
+//	TEST_ASSERT_EQUAL(0, uart_device_open(6));
 //	TEST_ASSERT_EQUAL(EBUSY, errno);
 //}
 
@@ -476,7 +473,7 @@ TEST(UsartIO_DMA, ReadWhenBytesToReadMoreThanBytesInBufferAndHalErrorBusyTimeout
 //	usart_apis.HAL_UART_Init = m_init_hal_ok;
 //	usart_apis.HAL_UART_Receive_DMA = m_receive_hal_ok;
 //	
-//	TEST_ASSERT_EQUAL(&m_huio, UART_IO_Open(6));
+//	TEST_ASSERT_EQUAL(&m_huio, uart_device_open(6));
 //	
 //	/** should we check HAL state? I don't think so, cause
 //	the function trust the return value, rather than 
@@ -504,14 +501,14 @@ TEST(UsartIO_DMA, WriteInvalidArgs)
 	char c;
 	struct uart_device huio = { .rbuf_size = 64, .tbuf_size = 64, };
 	
-	TEST_ASSERT_EQUAL(-1, UART_IO_Write(0, &c, 1));
+	TEST_ASSERT_EQUAL(-1, uart_device_write(0, &c, 1));
 	TEST_ASSERT_EQUAL(EINVAL, errno);
-	TEST_ASSERT_EQUAL(-1, UART_IO_Write(&huio, 0, 1));
+	TEST_ASSERT_EQUAL(-1, uart_device_write(&huio, 0, 1));
 	TEST_ASSERT_EQUAL(EINVAL, errno);
 	
 	/** no effect for errno**/
 	/** may be changed future, man page write **/
-	TEST_ASSERT_EQUAL(0, UART_IO_Write(&huio, &c, 0)); 
+	TEST_ASSERT_EQUAL(0, uart_device_write(&huio, &c, 0)); 
 }
 
 TEST(UsartIO_DMA, WriteHalStateTimeoutErrorReset)
@@ -526,17 +523,17 @@ TEST(UsartIO_DMA, WriteHalStateTimeoutErrorReset)
 	
 	errno = 0;
 	huio.handle->huart.State = HAL_UART_STATE_TIMEOUT;
-	TEST_ASSERT_EQUAL(-1, UART_IO_Write(&huio, &c, 1));
+	TEST_ASSERT_EQUAL(-1, uart_device_write(&huio, &c, 1));
 	TEST_ASSERT_EQUAL(EIO, errno);
 	
 	errno = 0;
 	huio.handle->huart.State = HAL_UART_STATE_RESET;
-	TEST_ASSERT_EQUAL(-1, UART_IO_Write(&huio, &c, 1));
+	TEST_ASSERT_EQUAL(-1, uart_device_write(&huio, &c, 1));
 	TEST_ASSERT_EQUAL(EIO, errno);
 
 	errno = 0;
 	huio.handle->huart.State = HAL_UART_STATE_ERROR;
-	TEST_ASSERT_EQUAL(-1, UART_IO_Write(&huio, &c, 1));
+	TEST_ASSERT_EQUAL(-1, uart_device_write(&huio, &c, 1));
 	TEST_ASSERT_EQUAL(EIO, errno);
 }
 
@@ -605,7 +602,7 @@ TEST(UsartIO_DMA, WriteBufferSpaceAdequateAndHalReady)	// write
 	huio.handle->ops.send = send_mock_hal_ok;
 	huio.handle->huart.State = HAL_UART_STATE_READY;
 	
-	written = UART_IO_Write(&huio, s2, strlen(s2));
+	written = uart_device_write(&huio, s2, strlen(s2));
 	
 	TEST_ASSERT_EQUAL(strlen(s2), written);
 	TEST_ASSERT_EQUAL_MEMORY(s3, td.txdma_buf, strlen(s3));
@@ -652,7 +649,7 @@ TEST(UsartIO_DMA, WriteBufferSpaceAdequateAndHalBusy)
 	hue.huart.State = HAL_UART_STATE_READY;
 	fill_tx_testdata(&huio, 1, s1, strlen(s1), 0, 0, 0);
 	
-	written = UART_IO_Write(&huio, s2, strlen(s2));
+	written = uart_device_write(&huio, s2, strlen(s2));
 	
 	TEST_ASSERT_EQUAL(strlen(s2), written);
 	TEST_ASSERT_EQUAL_MEMORY(s3, huio.tbuf[1], strlen(s3));
@@ -663,7 +660,7 @@ TEST(UsartIO_DMA, WriteBufferSpaceAdequateAndHalBusy)
 //	fill_tx_upper(1, s1, strlen(s1));
 //	m_huio.handle->huart.State = HAL_UART_STATE_READY;	/** otherwise trapped **/
 //	
-//	written = UART_IO_Write(&m_huio, s2, strlen(s2));
+//	written = uart_device_write(&m_huio, s2, strlen(s2));
 
 //	TEST_ASSERT_EQUAL(strlen(s2), written);
 //	
@@ -714,7 +711,7 @@ TEST(UsartIO_DMA, WriteBufferSpaceInadequateAndHalReady)
 	hue.huart.State = HAL_UART_STATE_READY;
 	fill_tx_testdata(&huio, 1, s1, sizeof(s1), 0, 0, 0);
 	
-	written = UART_IO_Write(&huio, s2, sizeof(s2));
+	written = uart_device_write(&huio, s2, sizeof(s2));
 	
 	TEST_ASSERT_EQUAL(sizeof(s2), written);
 	
@@ -732,7 +729,7 @@ TEST(UsartIO_DMA, WriteBufferSpaceInadequateAndHalReady)
 //	fill_tx_upper(1, s1, sizeof(s1));
 //	m_huio.handle->huart.State = HAL_UART_STATE_READY;	/** otherwise trapped **/
 //	
-//	written = UART_IO_Write(&m_huio, s2, sizeof(s2));
+//	written = uart_device_write(&m_huio, s2, sizeof(s2));
 
 //	TEST_ASSERT_EQUAL(sizeof(s2), written);
 //	
@@ -785,13 +782,13 @@ TEST(UsartIO_DMA, WriteBufferSpaceInadequateAndHalBusy)
 	hue.huart.State = HAL_UART_STATE_READY;
 	fill_tx_testdata(&huio, 1, s1, sizeof(s1), 0, 0, 0);
 	
-	written = UART_IO_Write(&huio, s2, sizeof(s2));	
+	written = uart_device_write(&huio, s2, sizeof(s2));	
 	
 //	usart_apis.HAL_UART_Transmit_DMA = m_transmit_hal_busy;
 //	fill_tx_upper(1, s1, sizeof(s1));
 //	m_huio.handle->huart.State = HAL_UART_STATE_READY;	/** otherwise trapped **/
 //	
-//	written = UART_IO_Write(&m_huio, s2, sizeof(s2));
+//	written = uart_device_write(&m_huio, s2, sizeof(s2));
 
 	TEST_ASSERT_EQUAL(UART_IO_BUFFER_SIZE - sizeof(s1), written);
 	TEST_ASSERT_EQUAL_HEX32(huio.tbuf[1], huio.tx_head);
@@ -810,31 +807,6 @@ TEST(UsartIO_DMA, WriteBufferSpaceInadequateAndHalBusy)
 // 3. uartex init failed (NO this case !)
 // 4. malloc failed x 4
 // 5. recv failed (NO this case !)
-//
-UARTEX_HandleTypeDef* mock_create_uartex_handle_by_port_success(struct msp_factory * msp, int num)
-{
-	struct uart_device * udev;
-	
-	countdown--;
-	TEST_ASSERT_NOT_NULL(msp);
-	udev = (struct uart_device*)msp->testdata;	
-	TEST_ASSERT_EQUAL(udev->dev.number, num);
-	
-	return (UARTEX_HandleTypeDef*)udev->testdata;	// the fake handle
-}
-
-UARTEX_HandleTypeDef* mock_huartex_create_fail(struct msp_factory * msp, int num) // tagged to be deleted
-{
-	struct uart_device * udev;
-	
-	countdown--;
-	TEST_ASSERT_NOT_NULL(msp);
-	udev = (struct uart_device*)msp->testdata;	
-	TEST_ASSERT_EQUAL(udev->dev.number, num);
-	
-	return NULL;
-}
-
 UARTEX_HandleTypeDef* mock_msp_create_uartex_handle_by_port(struct msp_factory * msp, int num)
 {
 	struct uart_device_testdata * td = (struct uart_device_testdata *)get_testdata();
@@ -886,35 +858,6 @@ HAL_StatusTypeDef mock_uartex_handle_init(UARTEX_HandleTypeDef * hue)
 
 
 
-HAL_StatusTypeDef mock_uartex_init_success(UARTEX_HandleTypeDef * hue)
-{
-	countdown--;
-	TEST_ASSERT_EQUAL(HAL_UART_STATE_RESET, hue->huart.State);
-	hue->huart.State = HAL_UART_STATE_READY;
-	return HAL_OK;
-}
-
-HAL_StatusTypeDef mock_uartex_deinit_success(UARTEX_HandleTypeDef * hue)
-{
-	countdown--;
-	TEST_ASSERT_EQUAL(HAL_UART_STATE_READY, hue->huart.State);
-	hue->huart.State = HAL_UART_STATE_RESET;
-	return HAL_OK;
-}
-
-HAL_StatusTypeDef mock_uartex_recv_success(UARTEX_HandleTypeDef * hue, uint8_t *pData, uint16_t Size)	// tagged to be removed.
-{
-	struct uart_device * udev;
-	
-	countdown--;
-	TEST_ASSERT_NOT_NULL(hue);
-	udev = (struct uart_device*)hue->testdata;
-	
-	TEST_ASSERT_EQUAL_HEX32(udev->rbuf[0], pData);
-	TEST_ASSERT_EQUAL(udev->rbuf_size, Size);
-	
-	return HAL_OK;
-}
 
 HAL_StatusTypeDef mock_uartex_handle_deinit(UARTEX_HandleTypeDef * hue)
 {
@@ -985,7 +928,7 @@ TEST(UsartIO_DMA, OpenWhenDeviceNotOpenedAllSuccess)
 	td->uartex_handle.ops.init = mock_uartex_handle_init;
 	td->uartex_handle.ops.recv = mock_uartex_handle_recv;
 		
-	ret = UART_IO_Open(&td->udev.dev, &td->file);
+	ret = uart_device_open(&td->udev.dev, &td->file);
 	
 	TEST_ASSERT_EQUAL(1, td->msp_create_uart_handle_by_port_called);
 	TEST_ASSERT_EQUAL(1, td->uartex_handle_init_called);
@@ -1040,7 +983,7 @@ TEST(UsartIO_DMA, OpenWhenDeviceNotOpenedCreateHandleFail)
 	td->msp_create_uart_handle_by_port_fail_countdown = 0;
 	td->msp.create_uartex_handle_by_port = mock_msp_create_uartex_handle_by_port;
 	
-	ret = UART_IO_Open(&td->udev.dev, &td->file);
+	ret = uart_device_open(&td->udev.dev, &td->file);
 	
 	TEST_ASSERT_EQUAL(-EFATAL, ret);
 	TEST_ASSERT_EQUAL(1, td->msp_create_uart_handle_by_port_called);
@@ -1058,22 +1001,22 @@ TEST(UsartIO_DMA, OpenWhenDeviceNotOpenedMallocFail)
 	// hence no need to worry anything are called before all malloc done.
 	
 	UnityMalloc_MakeMallocFailAfterCount(0);
-	ret = UART_IO_Open(&td->udev.dev, &td->file);
+	ret = uart_device_open(&td->udev.dev, &td->file);
 	TEST_ASSERT_EQUAL(-ENOMEM, ret);											// return ENOMEM
 	assert_device_and_file_intact(&td->udev, &td->file);
 
 	UnityMalloc_MakeMallocFailAfterCount(1);
-	ret = UART_IO_Open(&td->udev.dev, &td->file);
+	ret = uart_device_open(&td->udev.dev, &td->file);
 	TEST_ASSERT_EQUAL(-ENOMEM, ret);											// return ENOMEM
 	assert_device_and_file_intact(&td->udev, &td->file);	
 	
 	UnityMalloc_MakeMallocFailAfterCount(2);
-	ret = UART_IO_Open(&td->udev.dev, &td->file);
+	ret = uart_device_open(&td->udev.dev, &td->file);
 	TEST_ASSERT_EQUAL(-ENOMEM, ret);											// return ENOMEM
 	assert_device_and_file_intact(&td->udev, &td->file);
 	
 	UnityMalloc_MakeMallocFailAfterCount(3);
-	ret = UART_IO_Open(&td->udev.dev, &td->file);
+	ret = uart_device_open(&td->udev.dev, &td->file);
 	TEST_ASSERT_EQUAL(-ENOMEM, ret);											// return ENOMEM
 	assert_device_and_file_intact(&td->udev, &td->file);	
 }
@@ -1086,34 +1029,13 @@ TEST(UsartIO_DMA, Release)
 	struct uart_device_testdata * td = (struct uart_device_testdata *)get_testdata();
 	TEST_ASSERT_NOT_NULL(td);	
 	
-//	int 												ret;
-//	struct file 								file = {0};
-//	struct msp_factory 					msp = {0};
-//	struct UARTEX_HandleTypeDef huartex = {0};
-//	struct uart_device 					udev = 
-//		{ 
-//			.dev = { .name = "UART2", .number = 2, },
-//			.msp = &msp,
-//			.rbuf_size = 13, 
-//			.tbuf_size = 17, 
-//		};
-//	
-//	udev.testdata = &huartex;
-//	huartex.testdata = &udev;																// 
-//	msp.testdata = &udev;
-//	
-//	msp.create_uartex_handle_by_port = 
-//		mock_create_uartex_handle_by_port_success;						// create uartex handle
-//	huartex.ops.init = mock_uartex_init_success;						// init uart (hardware)
-//	huartex.ops.recv = mock_uartex_recv_success;						// start recv 
-	
 	td->msp.create_uartex_handle_by_port = mock_msp_create_uartex_handle_by_port;
 	td->msp.destroy_uartex_handle = mock_msp_destroy_uartex_handle;
 	td->uartex_handle.ops.init = mock_uartex_handle_init;
 	td->uartex_handle.ops.deinit = mock_uartex_handle_deinit;
 	td->uartex_handle.ops.recv = mock_uartex_handle_recv;
 	
-	UART_IO_Open(&td->udev.dev, &td->file);
+	uart_device_open(&td->udev.dev, &td->file);
 	
 	ret = uart_device_release(&td->udev.dev, &td->file);
 	
@@ -1131,6 +1053,20 @@ TEST(UsartIO_DMA, Release)
  *****************************************************************************/
 TEST_GROUP_RUNNER(UsartIO_DMA)
 {
+	struct uart_device_testdata testdata = {
+		.file = {0},
+		.msp = {0},
+		.uartex_handle = {0},
+		.udev = {
+			.dev = { .name = "UART2", .number = 2, },
+			.msp = &testdata.msp,
+			.rbuf_size = 13,
+			.tbuf_size = 17,
+		},
+	};
+
+	set_testdata(&testdata);	
+	
 	// args invalid
 	// args valid, read n bytes, n <= bytes in upper buffer
 	// args valid, n > bytes in upper buffer, and HAL READY
@@ -1157,25 +1093,14 @@ TEST_GROUP_RUNNER(UsartIO_DMA)
 	RUN_TEST_CASE(UsartIO_DMA, WriteBufferSpaceInadequateAndHalReady);
 	RUN_TEST_CASE(UsartIO_DMA, WriteBufferSpaceInadequateAndHalBusy);
 	
-	struct uart_device_testdata testdata = {
-		.file = {0},
-		.msp = {0},
-		.uartex_handle = {0},
-		.udev = {
-			.dev = { .name = "UART2", .number = 2, },
-			.msp = &testdata.msp,
-			.rbuf_size = 13,
-			.tbuf_size = 17,
-		},
-	};
 
-	set_testdata(&testdata);
 	// open test	
 	RUN_TEST_CASE(UsartIO_DMA, OpenWhenDeviceNotOpenedCreateHandleFail);
 	RUN_TEST_CASE(UsartIO_DMA, OpenWhenDeviceNotOpenedMallocFail);	
 	RUN_TEST_CASE(UsartIO_DMA, OpenWhenDeviceNotOpenedAllSuccess);
 	// release
 	RUN_TEST_CASE(UsartIO_DMA, Release);
+	
 	set_testdata(NULL);
 }
 

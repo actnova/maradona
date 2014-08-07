@@ -72,7 +72,7 @@ n/a		HAL_UART_STATE_ERROR             = 0x04     /*!< Error                     
 
 
 /**
-uart_device* UART_IO_Open(int port)
+uart_device* uart_device_open(int port)
 {
 //	HAL_StatusTypeDef status;
 	uart_device* huio;
@@ -129,7 +129,7 @@ uart_device* UART_IO_Open(int port)
  * When the function is called again, that is, the buffer is empty, 
  * it return -1 and set errno correspondingly..
  */
-int UART_IO_Read(struct uart_device* h, char* buffer, size_t buffer_size)
+int uart_device_read(struct uart_device* h, char* buffer, size_t buffer_size)
 {
 
 	HAL_StatusTypeDef status;
@@ -208,7 +208,7 @@ int UART_IO_Read(struct uart_device* h, char* buffer, size_t buffer_size)
  * upper buffers. ALL-OR-NONE is not acceptable for user must slice the long
  * string by themselves.
  */
-int UART_IO_Write(struct uart_device* h, char* buffer, size_t size) {
+int uart_device_write(struct uart_device* h, char* buffer, size_t size) {
 	
 	HAL_StatusTypeDef status;
 	char* tx_end;
@@ -285,7 +285,7 @@ n/a		HAL_UART_STATE_ERROR             = 0x04     /*!< Error                     
 	return count;
 }
 
-int	UART_IO_Open(struct device * dev, struct file * filp)
+int	uart_device_open(struct device * dev, struct file * filp)
 {
 	void* h;
 	int ret;

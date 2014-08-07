@@ -53,9 +53,9 @@ struct uart_device {
 };
 
 /** tested **/
-int 									UART_IO_Read(struct uart_device * udev, char* buffer, size_t size);
-int 									UART_IO_Write(struct uart_device * udev, char* buffer, size_t size);
-int 									UART_IO_Open(struct device * dev, struct file * filp);
+int 									uart_device_read(struct uart_device * udev, char* buffer, size_t size);
+int 									uart_device_write(struct uart_device * udev, char* buffer, size_t size);
+int 									uart_device_open(struct device * dev, struct file * filp);
 int										uart_device_release(struct device * dev, struct file * filp);
 
 
@@ -64,9 +64,8 @@ void									UART_IO_DeInitAll(void);
 void 									UART_IO_Task(void);
 
 int										UART_IO_FlushRx(struct uart_device* udev);
-
 int										UART_IO_FlushTx(struct uart_device* uio);
-int 									UART_IO_Close(struct uart_device* uio);
+//int 									UART_IO_Close(struct uart_device* uio);
 
 //UART_HandleTypeDef*			UART_IO_GetUartHandle(uart_device* h);
 //UART_HandleTypeDef*			UART_IO_GetUartHandleByPort(int num);
