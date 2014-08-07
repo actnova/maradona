@@ -7,140 +7,6 @@
 #include "stm32f4xx_hal.h"
 #include "uart_io_private.h"
 
-//#ifdef UNIT_TEST
-//#define __CALL	usart_apis.
-//#else
-//#define __CALL
-//#endif
-
-//static UART_HandleTypeDef huart2_default = {
-//  .Instance = USART2,
-//  .Init.BaudRate = 115200,
-//  .Init.WordLength = UART_WORDLENGTH_8B,
-//  .Init.StopBits = UART_STOPBITS_1,
-//  .Init.Parity = UART_PARITY_NONE,
-//  .Init.Mode = UART_MODE_TX_RX,
-//  .Init.HwFlowCtl = UART_HWCONTROL_NONE,
-//  .Init.OverSampling = UART_OVERSAMPLING_16,
-//};
-
-/*
- *	declare external uart handles
- */
-//#if (UART_IO_USE_USART1)
-//extern UART_HandleTypeDef	huart1;
-//#endif
-//#if (UART_IO_USE_USART2)
-//extern UART_HandleTypeDef huart2;
-//static char uart2_rbuf[2][UART_IO_BUFFER_SIZE];
-//static char uart2_tbuf[2][UART_IO_BUFFER_SIZE];
-//static uart_device huio2 =
-//{
-//	.handle = &huart2,
-//	.rbuf[0] = uart2_rbuf[0],
-//	.rbuf[1] = uart2_rbuf[1],
-//	.rx_upper = uart2_rbuf[1],
-//	.rx_head = &uart2_rbuf[1][1],
-//	.rx_tail = &uart2_rbuf[1][1],
-//	
-//	.tbuf[0] = uart2_tbuf[0],
-//	.tbuf[1] = uart2_tbuf[1],
-
-//	.tx_head = &uart2_tbuf[1][0],
-//	.tx_tail = &uart2_tbuf[1][0],
-//	
-//	.port = 2
-//};	
-//#endif
-//#if (UART_IO_USE_USART3)
-//extern UART_HandleTypeDef huart3;
-//static char uart3_rbuf[2][UART_IO_BUFFER_SIZE];
-//static uart_device huio3 =
-//{
-//	.handle = &huart3,
-//	.rbuf[0] = uart3_rbuf[0],
-//	.rbuf[1] = uart3_rbuf[1],
-//	.rx_upper = uart3_rbuf[1],
-//	.rx_head = &uart3_rbuf[1][1],
-//	.rx_tail = &uart3_rbuf[1][1],
-//	.port = 3
-//};	
-//#endif
-//#if (UART_IO_USE_USART4)
-//extern UART_HandleTypeDef huart4;
-//#endif
-//#if (UART_IO_USE_USART5)
-//extern UART_HandleTypeDef huart5;
-//#endif
-//#if (UART_IO_USE_USART6)
-//extern UART_HandleTypeDef	huart6;
-//#endif
-
-
-
-/*
- *	This globals are required for UART_IO_Task, which starts Tx transmission
- *	if hardware ready.
- */
-//static uart_device* uart_io_handles[7] = 
-//{
-//#if (UART_IO_USE_USART1)
-//&huio1,
-//#else	
-//0,
-//#endif
-//	
-//#if (UART_IO_USE_USART2)
-//&huio2,
-//#else
-//0,
-//#endif
-
-//#if (UART_IO_USE_USART3)
-//&huio3,
-//#else
-//0,
-//#endif
-
-//#if (UART_IO_USE_USART4)
-//&huio4,
-//#else
-//0,
-//#endif
-
-//#if (UART_IO_USE_USART5)
-//&huio5,
-//#else
-//0,
-//#endif
-
-//#if (UART_IO_USE_USART6)
-//&huio6,
-//#else
-//0,
-//#endif
-//};
-
-//uart_device* UART_IO_GetHandle(int port) 
-//{
-//	
-//	if (port < 1 || port > 6)
-//		return 0;
-//	
-//	return uart_io_handles[port];
-//}
-
-//int UART_IO_SetHandle(int port, uart_device* handle)
-//{
-//	if (port < 1 || port > 6)
-//		return -1;
-//	
-//	uart_io_handles[port] = handle;
-//	
-//	return 0;
-//}
-
-
 /** do it anyway, considering we cannot know what is the previously set buffer size, dont make assumptios, leave the POLICY to the caller **/
 HAL_StatusTypeDef UART_IO_RxFlipBuffer(UART_HandleTypeDef* h, uint8_t* buf, size_t size, uint32_t* m0ar, int* ndtr) 
 {
@@ -206,7 +72,7 @@ n/a		HAL_UART_STATE_ERROR             = 0x04     /*!< Error                     
 
 
 /**
-uart_device* UART_IO_Open(int port)
+uart_device* uart_device_open(int port)
 {
 //	HAL_StatusTypeDef status;
 	uart_device* huio;
@@ -263,7 +129,7 @@ uart_device* UART_IO_Open(int port)
  * When the function is called again, that is, the buffer is empty, 
  * it return -1 and set errno correspondingly..
  */
-int UART_IO_Read(struct uart_device* h, char* buffer, size_t buffer_size)
+int uart_device_read(struct uart_device* h, char* buffer, size_t buffer_size)
 {
 
 	HAL_StatusTypeDef status;
@@ -342,7 +208,7 @@ int UART_IO_Read(struct uart_device* h, char* buffer, size_t buffer_size)
  * upper buffers. ALL-OR-NONE is not acceptable for user must slice the long
  * string by themselves.
  */
-int UART_IO_Write(struct uart_device* h, char* buffer, size_t size) {
+int uart_device_write(struct uart_device* h, char* buffer, size_t size) {
 	
 	HAL_StatusTypeDef status;
 	char* tx_end;
@@ -419,7 +285,7 @@ n/a		HAL_UART_STATE_ERROR             = 0x04     /*!< Error                     
 	return count;
 }
 
-int	UART_IO_Open(struct device * dev, struct file * filp)
+int	uart_device_open(struct device * dev, struct file * filp)
 {
 	void* h;
 	int ret;
@@ -488,11 +354,33 @@ int	UART_IO_Open(struct device * dev, struct file * filp)
 	fail3: 	free(udev->tbuf[0]); udev->tbuf[0] = NULL;
 	fail2: 	free(udev->rbuf[1]); udev->rbuf[1] = NULL;
 	fail1:	free(udev->rbuf[0]); udev->rbuf[0] = NULL;
-	fail0:	;
+	fail0:	return ret;
+}
+
+int	uart_device_release(struct device * dev, struct file * filp)
+{
+	int ret = 0;
+	struct uart_device * udev = container_of(dev, struct uart_device, dev);
+	
+	filp->private_data = NULL;
+	filp->f_ops = NULL;
+
+	udev->handle->ops.deinit(udev->handle);
+	udev->msp->destroy_uartex_handle(udev->msp, udev->handle);
+	udev->handle = NULL;
+	
+	free(udev->tbuf[1]);
+	free(udev->tbuf[0]);
+	free(udev->rbuf[1]);
+	free(udev->rbuf[0]);
+	
+	udev->tbuf[1] = udev->tbuf[0] = udev->tx_head = udev->tx_tail = 0;
+	udev->rbuf[1] = udev->rbuf[0] = udev->rx_head = udev->rx_tail = udev->rx_upper = 0;
+	
+	udev->open_count = 0;
 	
 	return ret;
 }
-
 
 #if 0
 
