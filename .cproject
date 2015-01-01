@@ -61,7 +61,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="Unity/extras/fixture/test|Drivers/BSP/STM32F407VE-BRK/Src/board.c|Projects/STM32F407VE-BRK/learning/usart/Projects|Projects/STM32F407VE-BRK/common|Projects/STM32F407VE-BRK/learning/usart/Src/test_usart.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="Middlewares/ST|Unity/extras/fixture/test|Drivers/BSP/STM32F407VE-BRK/Src/board.c|Projects/STM32F407VE-BRK/learning/usart/Projects|Projects/STM32F407VE-BRK/common|Projects/STM32F407VE-BRK/learning/usart/Src/test_usart.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -129,7 +129,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="Unity/extras/fixture/test|Drivers/BSP/STM32F407VE-BRK/Src/board.c|Projects/STM32F407VE-BRK/learning/usart/Projects|Projects/STM32F407VE-BRK/common" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="Middlewares/ST|Unity/extras/fixture/test|Drivers/BSP/STM32F407VE-BRK/Src/board.c|Projects/STM32F407VE-BRK/learning/usart/Projects|Projects/STM32F407VE-BRK/common" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
