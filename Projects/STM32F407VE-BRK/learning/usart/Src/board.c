@@ -1,8 +1,9 @@
 #include <string.h>
 #include "stm32f4xx_hal.h"
-#include "dma.h"
-#include "gpio.h"
-#include "usart.h"
+
+#include "../../MSP/Inc/dma.h"
+#include "../../MSP/Inc/gpio.h"
+#include "../../MSP/Inc/usart.h"
 
 static GPIOEX_TypeDef rxpin_usart3 =
 {
