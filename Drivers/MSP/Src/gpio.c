@@ -39,7 +39,7 @@
 #include "errno_ex.h"
 #include "gpio.h"
 
-GPIO_ClockProviderTypeDef GPIO_ClockProvider = {0};
+GPIO_ClockProviderTypeDef GPIO_ClockProvider = {{0}};
 
 void	GPIOEX_HAL_Init(GPIOEX_TypeDef* gpioex)
 {

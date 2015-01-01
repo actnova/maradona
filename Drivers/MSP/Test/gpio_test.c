@@ -196,7 +196,7 @@ TEST(GPIOEX_Type, InitInvalidArgs)
 
 	const GPIO_ConfigTypeDef* config = &PC6_As_Uart6Tx_DefaultConfig;
 	GPIOEX_TypeDef 						ge;
-	TEST_ASSERT_NOT_NULL(&ge);
+	// TEST_ASSERT_NOT_NULL(&ge);
 	memset(&ge, 0xA5, sizeof(GPIOEX_TypeDef));
 	
 	ret = GPIOEX_Init(0, config->instance, &config->init, &clk);

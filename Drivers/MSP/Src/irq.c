@@ -5,7 +5,7 @@
 #include "irq.h"
 
 
-IRQ_HandleRegistryTypeDef IRQ_HandlerObjectRegistry = {0};
+IRQ_HandleRegistryTypeDef IRQ_HandlerObjectRegistry = {{0}};
 
 void IRQ_HandlerObject_Register(IRQ_HandleRegistryTypeDef* registry, IRQn_Type irqn, void* p)
 {

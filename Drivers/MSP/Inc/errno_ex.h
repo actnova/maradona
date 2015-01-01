@@ -7,9 +7,9 @@
 
 
 #define EBASE				(0x10000000)
-#define	EIO					(EBASE + 5)
-#define EBUSY				(EBASE + 16)
-#define ENODEV			(EBASE + 19)
+// #define	EIO					(EBASE + 5)	/** already defined by gcc header **/
+// #define EBUSY				(EBASE + 16)
+// #define ENODEV			(EBASE + 19)
 #define EFATAL			(EBASE + 100)		/** no way to recover until a system reset **/
 
 #define EMAGIC			(0x10203040)		/** used in test mock to ensure the errno is not further touched. **/

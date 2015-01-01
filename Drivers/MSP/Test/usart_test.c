@@ -492,6 +492,9 @@ TEST_TEAR_DOWN(UART_DMA_TxRx)
 	/** read to clear ORE **/
 	if (HUART_DMA->Instance->SR & USART_SR_RXNE)
 		dr = HUART_DMA->Instance->DR;
+
+	(void)dr;
+
 	HAL_UART_DeInit(HUART_DMA);
 	
 	msp_destroy_uartex_handle(&msp, HUARTEX_DMA);
