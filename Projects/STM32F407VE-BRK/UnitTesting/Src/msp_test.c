@@ -1,8 +1,8 @@
-#include "../../../Projects/STM32F407VE-BRK/learning/MSP/Inc/msp.h"
 
 #include <string.h>
 
-#include "../../../Projects/STM32F407VE-BRK/learning/MSP/Inc/errno_ex.h"
+#include "msp.h"
+#include "errno_ex.h"
 
 
 static void* __testdata = 0;

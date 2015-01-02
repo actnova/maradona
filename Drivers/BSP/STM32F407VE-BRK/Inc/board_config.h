@@ -1,7 +1,7 @@
 #ifndef BOARD_CONFIG_H
 #define BOARD_CONFIG_H
 
-#include "../../../../Projects/STM32F407VE-BRK/learning/MSP/Inc/usart.h"
+#include "usart.h"
 
 typedef struct {
 	

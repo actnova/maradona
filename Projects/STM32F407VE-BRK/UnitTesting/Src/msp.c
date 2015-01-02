@@ -1,8 +1,8 @@
-#include "../../../Projects/STM32F407VE-BRK/learning/MSP/Inc/msp.h"
-
 #include "stm32f4xx_hal.h"
 #include "unity_fixture.h"
-#include "../../../Projects/STM32F407VE-BRK/learning/MSP/Inc/errno_ex.h"
+
+#include "msp.h"
+#include "errno_ex.h"
 
 UARTEX_HandleTypeDef* msp_create_uartex_handle_by_port(struct msp_factory * msp, int port) {
 	

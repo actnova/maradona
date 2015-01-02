@@ -4,10 +4,10 @@
 /** not sure if this module should be named as msp, or board, or hal. **/
 
 #include "board_config.h"
-#include "../../../Projects/STM32F407VE-BRK/learning/MSP/Inc/dma.h"
-#include "../../../Projects/STM32F407VE-BRK/learning/MSP/Inc/gpio.h"
-#include "../../../Projects/STM32F407VE-BRK/learning/MSP/Inc/irq.h"
-#include "../../../Projects/STM32F407VE-BRK/learning/MSP/Inc/usart.h"
+#include "dma.h"
+#include "gpio.h"
+#include "irq.h"
+#include "usart.h"
 
 
 struct msp_factory
@@ -15,7 +15,7 @@ struct msp_factory
 	const Board_ConfigTypeDef*					board_config;
 	
 	GPIO_ClockProviderTypeDef*					gpio_clk;
-	DMA_ClockProviderTypeDef*						dma_clk;	
+	DMA_ClockProviderTypeDef*					dma_clk;
 	IRQ_HandleRegistryTypeDef* 					irq_registry;
 	
 	

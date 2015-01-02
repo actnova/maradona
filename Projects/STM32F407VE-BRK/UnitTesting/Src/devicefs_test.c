@@ -1,5 +1,4 @@
-#include "../../Projects/STM32F407VE-BRK/learning/DeviceFS/devicefs.h"
-
+#include "devicefs.h"
 #include "unity_fixture.h"
 
 TEST_GROUP(DeviceFSDriverInterface);

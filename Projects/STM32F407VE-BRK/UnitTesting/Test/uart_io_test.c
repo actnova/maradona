@@ -1,11 +1,11 @@
-#include "../../../Projects/STM32F407VE-BRK/learning/MSP/Inc/uart_io.h"
-
+#include "uart_io.h"
 #include <string.h>
 #include <stdbool.h>
 #include "stm32f4xx_hal.h"
-#include "../../../Projects/STM32F407VE-BRK/learning/MSP/Inc/errno_ex.h"
-#include "../../../Projects/STM32F407VE-BRK/learning/MSP/Inc/uart_io_private.h"
-#include "../../DeviceFS/devicefs.h"
+
+#include "errno_ex.h"
+#include "uart_io_private.h"
+#include "devicefs.h"
 
 extern void* 	get_testdata(void);
 extern void 	set_testdata(void* data);

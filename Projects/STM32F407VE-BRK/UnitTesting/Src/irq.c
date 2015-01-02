@@ -1,10 +1,10 @@
-#include "../../../Projects/STM32F407VE-BRK/learning/MSP/Inc/irq.h"
 
 #include <stdlib.h>
 #include <string.h>
 #include "stm32f4xx_hal.h"
 
-#include "../../../Projects/STM32F407VE-BRK/learning/MSP/Inc/errno_ex.h"
+#include "irq.h"
+#include "errno_ex.h"
 
 
 IRQ_HandleRegistryTypeDef IRQ_HandlerObjectRegistry = {{0}};

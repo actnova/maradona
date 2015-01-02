@@ -1,13 +1,12 @@
-#include "../../../Projects/STM32F407VE-BRK/learning/MSP/Inc/usart.h"
-#include "../../../Projects/STM32F407VE-BRK/learning/MSP/Inc/usart_test.h"
-
 #include <string.h>
 #include "stm32f4xx_hal.h"
 
-#include "../../../Projects/STM32F407VE-BRK/learning/MSP/Inc/dma.h"
-#include "../../../Projects/STM32F407VE-BRK/learning/MSP/Inc/errno_ex.h"
-#include "../../../Projects/STM32F407VE-BRK/learning/MSP/Inc/irq.h"
-#include "../../../Projects/STM32F407VE-BRK/learning/MSP/Inc/msp.h"
+#include "usart.h"
+#include "usart_test.h"
+#include "dma.h"
+#include "irq.h"
+#include "errno_ex.h"
+#include "msp.h"
 
 static UARTEX_HandleTypeDef* huartex_dma;
 static UARTEX_HandleTypeDef* huartex;

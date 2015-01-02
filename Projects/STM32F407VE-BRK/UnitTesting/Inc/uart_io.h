@@ -2,11 +2,11 @@
 #define UART_IO_H
 
 #include <stddef.h>
-#include "configuration.h"
 #include "stm32f4xx_hal.h"
-#include "../../../Projects/STM32F407VE-BRK/learning/MSP/Inc/msp.h"
-#include "../../../Projects/STM32F407VE-BRK/learning/MSP/Inc/usart.h"
-#include "../../DeviceFS/devicefs.h"
+#include "usart.h"
+#include "devicefs.h"
+#include "msp.h"
+#include "configuration.h"
 
 /** 
 

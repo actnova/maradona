@@ -1,10 +1,10 @@
-#include "../../../Projects/STM32F407VE-BRK/learning/MSP/Inc/gpio.h"
 
 #include <stdbool.h>
 #include <string.h>
 #include "stm32f4xx_hal.h"
 
-#include "../../../Projects/STM32F407VE-BRK/learning/MSP/Inc/errno_ex.h"
+#include "gpio.h"
+#include "errno_ex.h"
 
 
 static GPIO_ClockProviderTypeDef	gclk;

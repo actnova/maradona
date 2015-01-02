@@ -43,8 +43,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include <stdbool.h>	 
 #include "stm32f4xx_hal.h"
-#include "../../../Projects/STM32F407VE-BRK/learning/MSP/Inc/gpio.h"
-#include "../../../Projects/STM32F407VE-BRK/learning/MSP/Inc/dma.h"
+#include "gpio.h"
+#include "dma.h"
 	 
 typedef struct UARTEX_HandleTypeDef UARTEX_HandleTypeDef;
 	 

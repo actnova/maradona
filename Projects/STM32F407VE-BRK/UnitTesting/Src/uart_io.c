@@ -2,11 +2,11 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
-#include "configuration.h"
 #include "stm32f4xx_hal.h"
 
-#include "../../../Projects/STM32F407VE-BRK/learning/MSP/Inc/errno_ex.h"
-#include "../../../Projects/STM32F407VE-BRK/learning/MSP/Inc/uart_io_private.h"
+#include "errno_ex.h"
+#include "uart_io_private.h"
+#include "configuration.h"
 
 /** do it anyway, considering we cannot know what is the previously set buffer size, dont make assumptios, leave the POLICY to the caller **/
 HAL_StatusTypeDef UART_IO_RxFlipBuffer(UART_HandleTypeDef* h, uint8_t* buf, size_t size, uint32_t* m0ar, int* ndtr) 

@@ -34,14 +34,14 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include "../../../Projects/STM32F407VE-BRK/learning/MSP/Inc/usart.h"
 
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "../../../Projects/STM32F407VE-BRK/learning/MSP/Inc/errno_ex.h"
-#include "../../../Projects/STM32F407VE-BRK/learning/MSP/Inc/gpio.h"
+#include "usart.h"
+#include "gpio.h"
+#include "errno_ex.h"
 
 static void enable_usart_clock(USART_TypeDef* instance)
 {

@@ -34,7 +34,7 @@
 									<listOptionValue builtIn="false" value="../Unity/src"/>
 									<listOptionValue builtIn="false" value="../Unity/extras/fixture/src"/>
 									<listOptionValue builtIn="false" value="../Middlewares/DeviceFS"/>
-									<listOptionValue builtIn="false" value="../Projects/STM32F407VE-BRK/learning/usart/Inc"/>
+									<listOptionValue builtIn="false" value="../Projects/STM32F407VE-BRK/UnitTesting/Inc"/>
 								</option>
 								<option id="gnu.c.compiler.option.misc.other.164499167" name="Other flags" superClass="gnu.c.compiler.option.misc.other" useByScannerDiscovery="false" value="" valueType="string"/>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1254269665" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
@@ -60,8 +60,13 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
+					<fileInfo id="cdt.managedbuild.config.gnu.cross.exe.debug.1533609882.1565431645" name="usart_test.c" rcbsApplicability="disable" resourcePath="Projects/STM32F407VE-BRK/UnitTesting/Test/usart_test.c" toolsToInvoke="cdt.managedbuild.tool.gnu.cross.c.compiler.892326195.1944424579">
+						<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.892326195.1944424579" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler.892326195">
+							<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.531272701" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+						</tool>
+					</fileInfo>
 					<sourceEntries>
-						<entry excluding="Middlewares/ST|Unity/extras/fixture/test|Drivers/BSP/STM32F407VE-BRK/Src/board.c|Projects/STM32F407VE-BRK/learning/usart/Projects|Projects/STM32F407VE-BRK/common|Projects/STM32F407VE-BRK/learning/usart/Src/test_usart.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="Projects/STM32F407VE-BRK/UnitTesting/Src/test_usart.c|Projects/STM32F407VE-BRK/learning/usart/Src/test_usart.c|Projects/STM32F407VE-BRK/learning/usart/Projects|Drivers/BSP/STM32F407VE-BRK/Src/board.c|Unity/extras/fixture/test|Projects/STM32F407VE-BRK/common|Middlewares/ST" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -103,6 +108,7 @@
 									<listOptionValue builtIn="false" value="../Unity/extras/fixture/src"/>
 									<listOptionValue builtIn="false" value="../Middlewares/DeviceFS"/>
 									<listOptionValue builtIn="false" value="../Projects/STM32F407VE-BRK/learning/usart/Inc"/>
+									<listOptionValue builtIn="false" value="../Projects/STM32F407VE-BRK/UnitTesting/Inc"/>
 								</option>
 								<option id="gnu.c.compiler.option.misc.other.1141835205" name="Other flags" superClass="gnu.c.compiler.option.misc.other" useByScannerDiscovery="false" value="" valueType="string"/>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1046661651" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
@@ -129,7 +135,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="Middlewares/ST|Unity/extras/fixture/test|Drivers/BSP/STM32F407VE-BRK/Src/board.c|Projects/STM32F407VE-BRK/learning/usart/Projects|Projects/STM32F407VE-BRK/common" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="Projects/STM32F407VE-BRK/UnitTesting/Src/test_usart.c|Projects/STM32F407VE-BRK/UnitTesting/Test/usart_test.c|Projects/STM32F407VE-BRK/learning/usart/Projects|Drivers/BSP/STM32F407VE-BRK/Src/board.c|Unity/extras/fixture/test|Projects/STM32F407VE-BRK/common|Middlewares/ST" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

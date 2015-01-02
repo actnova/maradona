@@ -34,12 +34,13 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include "../../../Projects/STM32F407VE-BRK/learning/MSP/Inc/gpio.h"
 
 #include <stdbool.h>
 #include <string.h>
 
-#include "../../../Projects/STM32F407VE-BRK/learning/MSP/Inc/errno_ex.h"
+#include "gpio.h"
+
+#include "errno_ex.h"
 
 GPIO_ClockProviderTypeDef GPIO_ClockProvider = {{0}};
 

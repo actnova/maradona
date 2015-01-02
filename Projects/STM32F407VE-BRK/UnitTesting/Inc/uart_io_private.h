@@ -1,11 +1,11 @@
 #ifndef UART_IO_PRIVATE_H
 #define UART_IO_PRIVATE_H
 
-#include "configuration.h"
 #include "stm32f4xx_hal.h"
 
-#include "../../../Projects/STM32F407VE-BRK/learning/MSP/Inc/uart_io.h"
-#include "../../../Projects/STM32F407VE-BRK/learning/MSP/Inc/usart.h"
+#include "usart.h"
+#include "uart_io.h"
+#include "configuration.h"
 
 /*** intercept hal api ***/
 typedef struct {

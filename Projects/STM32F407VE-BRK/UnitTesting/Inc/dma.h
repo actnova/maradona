@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include "stm32f4xx_hal.h"
 
-#include "../../../Projects/STM32F407VE-BRK/learning/MSP/Inc/irq.h"
+#include "irq.h"
 
 typedef struct {
 	

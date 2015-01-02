@@ -1,10 +1,10 @@
-#include "../../../Projects/STM32F407VE-BRK/learning/MSP/Inc/irq.h"
 
 #include <string.h>
 #include <stdlib.h>
 #include "stm32f4xx_hal.h"
 
-#include "../../../Projects/STM32F407VE-BRK/learning/MSP/Inc/errno_ex.h"
+#include "irq.h"
+#include "errno_ex.h"
 
 TEST_GROUP(IRQ_HandlerObjectRegistry);
 TEST_SETUP(IRQ_HandlerObjectRegistry)
