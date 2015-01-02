@@ -2,6 +2,7 @@
 #define MSP_H
 
 /** not sure if this module should be named as msp, or board, or hal. **/
+#include "stm32f4xx_hal.h"
 
 #include "board_config.h"
 #include "dma.h"

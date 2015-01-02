@@ -29,12 +29,11 @@
 									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Device/ST/STM32F4xx/Include"/>
 									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Include"/>
 									<listOptionValue builtIn="false" value="../Drivers/STM32F4xx_HAL_Driver/Inc"/>
-									<listOptionValue builtIn="false" value="../Drivers/MSP/Inc"/>
 									<listOptionValue builtIn="false" value="../Drivers/BSP/STM32F407VE-BRK/Inc"/>
 									<listOptionValue builtIn="false" value="../Unity/src"/>
 									<listOptionValue builtIn="false" value="../Unity/extras/fixture/src"/>
-									<listOptionValue builtIn="false" value="../Middlewares/DeviceFS"/>
 									<listOptionValue builtIn="false" value="../Projects/STM32F407VE-BRK/UnitTesting/Inc"/>
+									<listOptionValue builtIn="false" value="../cmocka/include"/>
 								</option>
 								<option id="gnu.c.compiler.option.misc.other.164499167" name="Other flags" superClass="gnu.c.compiler.option.misc.other" useByScannerDiscovery="false" value="" valueType="string"/>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1254269665" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
@@ -48,6 +47,7 @@
 								<option id="gnu.cpp.compiler.option.debugging.level.1687939457" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 							</tool>
 							<tool command="gcc ${CPU_FLAGS} -T&quot;${ProjDirPath}/stm32f4_flash.ld&quot;" id="cdt.managedbuild.tool.gnu.cross.c.linker.1736739531" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker">
+								<option id="gnu.c.link.option.ldflags.244495800" name="Linker flags" superClass="gnu.c.link.option.ldflags" value="--specs=rdimon.specs -lc -lrdimon" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.linker.input.874750472" superClass="cdt.managedbuild.tool.gnu.c.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -60,13 +60,17 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
-					<fileInfo id="cdt.managedbuild.config.gnu.cross.exe.debug.1533609882.1565431645" name="usart_test.c" rcbsApplicability="disable" resourcePath="Projects/STM32F407VE-BRK/UnitTesting/Test/usart_test.c" toolsToInvoke="cdt.managedbuild.tool.gnu.cross.c.compiler.892326195.1944424579">
-						<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.892326195.1944424579" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler.892326195">
-							<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.531272701" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+					<fileInfo id="cdt.managedbuild.config.gnu.cross.exe.debug.1533609882.50976646" name="syscalls.c" rcbsApplicability="disable" resourcePath="Projects/STM32F407VE-BRK/UnitTesting/Src/syscalls.c" toolsToInvoke="cdt.managedbuild.tool.gnu.cross.c.compiler.892326195.189249903">
+						<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.892326195.189249903" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler.892326195"/>
+						<tool customBuildStep="true" id="org.eclipse.cdt.managedbuilder.ui.rcbs.374717800" name="Resource Custom Build Step">
+							<inputType id="org.eclipse.cdt.managedbuilder.ui.rcbs.inputtype.42678202" name="Resource Custom Build Step Input Type">
+								<additionalInput kind="additionalinputdependency" paths=""/>
+							</inputType>
+							<outputType id="org.eclipse.cdt.managedbuilder.ui.rcbs.outputtype.1516677571" name="Resource Custom Build Step Output Type"/>
 						</tool>
 					</fileInfo>
 					<sourceEntries>
-						<entry excluding="Projects/STM32F407VE-BRK/UnitTesting/Src/test_usart.c|Projects/STM32F407VE-BRK/learning/usart/Src/test_usart.c|Projects/STM32F407VE-BRK/learning/usart/Projects|Drivers/BSP/STM32F407VE-BRK/Src/board.c|Unity/extras/fixture/test|Projects/STM32F407VE-BRK/common|Middlewares/ST" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="Projects/STM32F407VE-BRK/UnitTesting/Src/syscalls.c|Projects/STM32F407VE-BRK/UnitTesting/Src/test_usart2.c|Projects/STM32F407VE-BRK/UnitTesting/Src/exclude|Projects/STM32F407VE-BRK/UnitTesting/Src/test_usart.c|Projects/STM32F407VE-BRK/learning/usart/Src/test_usart.c|Projects/STM32F407VE-BRK/learning/usart/Projects|Drivers/BSP/STM32F407VE-BRK/Src/board.c|Unity/extras/fixture/test|Projects/STM32F407VE-BRK/common|Middlewares/ST" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -102,13 +106,11 @@
 									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Device/ST/STM32F4xx/Include"/>
 									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Include"/>
 									<listOptionValue builtIn="false" value="../Drivers/STM32F4xx_HAL_Driver/Inc"/>
-									<listOptionValue builtIn="false" value="../Drivers/MSP/Inc"/>
 									<listOptionValue builtIn="false" value="../Drivers/BSP/STM32F407VE-BRK/Inc"/>
 									<listOptionValue builtIn="false" value="../Unity/src"/>
 									<listOptionValue builtIn="false" value="../Unity/extras/fixture/src"/>
-									<listOptionValue builtIn="false" value="../Middlewares/DeviceFS"/>
-									<listOptionValue builtIn="false" value="../Projects/STM32F407VE-BRK/learning/usart/Inc"/>
 									<listOptionValue builtIn="false" value="../Projects/STM32F407VE-BRK/UnitTesting/Inc"/>
+									<listOptionValue builtIn="false" value="../cmocka/include"/>
 								</option>
 								<option id="gnu.c.compiler.option.misc.other.1141835205" name="Other flags" superClass="gnu.c.compiler.option.misc.other" useByScannerDiscovery="false" value="" valueType="string"/>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1046661651" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
@@ -134,8 +136,17 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
+					<fileInfo id="cdt.managedbuild.config.gnu.cross.exe.release.1228416587.1381143087" name="syscalls.c" rcbsApplicability="disable" resourcePath="Projects/STM32F407VE-BRK/UnitTesting/Src/syscalls.c" toolsToInvoke="cdt.managedbuild.tool.gnu.cross.c.compiler.1760028267.137380469">
+						<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.1760028267.137380469" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler.1760028267"/>
+						<tool customBuildStep="true" id="org.eclipse.cdt.managedbuilder.ui.rcbs.6800629" name="Resource Custom Build Step">
+							<inputType id="org.eclipse.cdt.managedbuilder.ui.rcbs.inputtype.737529008" name="Resource Custom Build Step Input Type">
+								<additionalInput kind="additionalinputdependency" paths=""/>
+							</inputType>
+							<outputType id="org.eclipse.cdt.managedbuilder.ui.rcbs.outputtype.1720615799" name="Resource Custom Build Step Output Type"/>
+						</tool>
+					</fileInfo>
 					<sourceEntries>
-						<entry excluding="Projects/STM32F407VE-BRK/UnitTesting/Src/test_usart.c|Projects/STM32F407VE-BRK/UnitTesting/Test/usart_test.c|Projects/STM32F407VE-BRK/learning/usart/Projects|Drivers/BSP/STM32F407VE-BRK/Src/board.c|Unity/extras/fixture/test|Projects/STM32F407VE-BRK/common|Middlewares/ST" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="Projects/STM32F407VE-BRK/UnitTesting/Src/syscalls.c|Projects/STM32F407VE-BRK/UnitTesting/Src/test_usart2.c|Projects/STM32F407VE-BRK/UnitTesting/Src/exclude|Projects/STM32F407VE-BRK/UnitTesting/Src/test_usart.c|Projects/STM32F407VE-BRK/UnitTesting/Test/usart_test.c|Projects/STM32F407VE-BRK/learning/usart/Projects|Drivers/BSP/STM32F407VE-BRK/Src/board.c|Unity/extras/fixture/test|Projects/STM32F407VE-BRK/common|Middlewares/ST" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -164,4 +175,5 @@
 		</configuration>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
+	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 </cproject>

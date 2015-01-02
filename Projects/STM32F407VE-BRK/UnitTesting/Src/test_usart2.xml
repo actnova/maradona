@@ -5,10 +5,11 @@
 #include "unity_fixture.h"
 
 
+
 #define HUARTEX_DMA					(&huartex2_dma)
 #define HDMA_RX_UART				(&hdma_rx_uart2)
 #define HDMA_TX_UART				(&hdma_tx_uart2)
-#define HUART_DMA						(&huartex2_dma.huart)
+#define HUART_DMA					(&huartex2_dma.huart)
 
 const char alphabet[] = "abcdefghijklmnopqrstuvwxyz";
 

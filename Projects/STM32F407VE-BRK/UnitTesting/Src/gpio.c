@@ -39,7 +39,6 @@
 #include <string.h>
 
 #include "gpio.h"
-
 #include "errno_ex.h"
 
 GPIO_ClockProviderTypeDef GPIO_ClockProvider = {{0}};

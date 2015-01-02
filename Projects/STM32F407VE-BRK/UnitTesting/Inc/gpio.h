@@ -54,22 +54,30 @@ typedef enum
 {
 	GPIOEX_STATE_RESET = 0,
 	GPIOEX_STATE_SET,
-} GPIOEX_StateTypeDef;
+} 	GPIOEX_StateTypeDef;
 
 typedef struct
 {
-	GPIO_TypeDef										*instance;
-	GPIO_InitTypeDef								init;
+	GPIO_TypeDef			*instance;
+	GPIO_InitTypeDef		init;
 	
 } GPIO_ConfigTypeDef;
+
+/*
+ * GPIO_TypeDef is actually the register map
+ * GPIO_InitTypeDef is init configuration data
+ *
+ * clk points to clock provider
+ */
 	 
 typedef struct
 {
-	GPIO_TypeDef  									*instance;
-	GPIO_InitTypeDef								init;
+	GPIO_TypeDef  							*instance;
+	GPIO_InitTypeDef						init;
+
 	GPIO_ClockProviderTypeDef				*clk;
 	
-	GPIOEX_StateTypeDef							state;
+	GPIOEX_StateTypeDef						state;
 	
 } GPIOEX_TypeDef;	
 

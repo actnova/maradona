@@ -33,16 +33,34 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
+#include <stdarg.h>
+#include <stddef.h>
+#include <setjmp.h>
+#include <cmocka.h>
+
 #include "stm32f4xx_hal.h"
 #include "unity_fixture.h"
 
-extern void board_init(void);
-extern void board_main(void);
+extern void initialise_monitor_handles(void);
 
-int main(void)
-{
+extern void board_init(void);
+// extern void board_main(void);
+
+// A test case that does nothing and succeeds.
+void null_test_success(void **state) {
+	(void*)state;
+}
+
+int main(void) {
+
+	initialise_monitor_handles();
+
 	board_init();
-	board_main();
+
+    const UnitTest tests[] = {
+        unit_test(null_test_success),
+    };
+    return run_tests(tests);
 }
 
 

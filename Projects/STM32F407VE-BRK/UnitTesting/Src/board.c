@@ -85,10 +85,11 @@ static void SystemClock_Config(void)
 
 int unity_output_char(int a) 
 {
-	uint8_t chr = a;
-	
-	HAL_UART_Transmit(&huartex3.huart, &chr, 1, 10);
-	return a;
+//	uint8_t chr = a;
+//
+//	HAL_UART_Transmit(&huartex3.huart, &chr, 1, 10);
+//	return a;
+	return putc(a, stdout);
 }
 
 static void RunAllTests(void)
@@ -117,10 +118,10 @@ void board_init(void)
 	UnityMain(1, 0, RunAllTests);
 }
 
-void board_main(void)
-{	
-	while(1){};
-}
+//void board_main(void)
+//{
+//	while(1){};
+//}
 
 void SysTick_Handler(void)
 {
