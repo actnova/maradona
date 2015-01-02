@@ -60,17 +60,8 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
-					<fileInfo id="cdt.managedbuild.config.gnu.cross.exe.debug.1533609882.50976646" name="syscalls.c" rcbsApplicability="disable" resourcePath="Projects/STM32F407VE-BRK/UnitTesting/Src/syscalls.c" toolsToInvoke="cdt.managedbuild.tool.gnu.cross.c.compiler.892326195.189249903">
-						<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.892326195.189249903" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler.892326195"/>
-						<tool customBuildStep="true" id="org.eclipse.cdt.managedbuilder.ui.rcbs.374717800" name="Resource Custom Build Step">
-							<inputType id="org.eclipse.cdt.managedbuilder.ui.rcbs.inputtype.42678202" name="Resource Custom Build Step Input Type">
-								<additionalInput kind="additionalinputdependency" paths=""/>
-							</inputType>
-							<outputType id="org.eclipse.cdt.managedbuilder.ui.rcbs.outputtype.1516677571" name="Resource Custom Build Step Output Type"/>
-						</tool>
-					</fileInfo>
 					<sourceEntries>
-						<entry excluding="Projects/STM32F407VE-BRK/UnitTesting/Src/syscalls.c|Projects/STM32F407VE-BRK/UnitTesting/Src/test_usart2.c|Projects/STM32F407VE-BRK/UnitTesting/Src/exclude|Projects/STM32F407VE-BRK/UnitTesting/Src/test_usart.c|Projects/STM32F407VE-BRK/learning/usart/Src/test_usart.c|Projects/STM32F407VE-BRK/learning/usart/Projects|Drivers/BSP/STM32F407VE-BRK/Src/board.c|Unity/extras/fixture/test|Projects/STM32F407VE-BRK/common|Middlewares/ST" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="Projects/STM32F407VE-BRK/UnitTesting/Test/test_usart.c|Projects/STM32F407VE-BRK/UnitTesting/Src/syscalls.c|Projects/STM32F407VE-BRK/UnitTesting/Src/test_usart2.c|Projects/STM32F407VE-BRK/UnitTesting/Src/exclude|Projects/STM32F407VE-BRK/learning/usart/Src/test_usart.c|Projects/STM32F407VE-BRK/learning/usart/Projects|Drivers/BSP/STM32F407VE-BRK/Src/board.c|Unity/extras/fixture/test|Projects/STM32F407VE-BRK/common|Middlewares/ST" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -136,17 +127,8 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
-					<fileInfo id="cdt.managedbuild.config.gnu.cross.exe.release.1228416587.1381143087" name="syscalls.c" rcbsApplicability="disable" resourcePath="Projects/STM32F407VE-BRK/UnitTesting/Src/syscalls.c" toolsToInvoke="cdt.managedbuild.tool.gnu.cross.c.compiler.1760028267.137380469">
-						<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.1760028267.137380469" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler.1760028267"/>
-						<tool customBuildStep="true" id="org.eclipse.cdt.managedbuilder.ui.rcbs.6800629" name="Resource Custom Build Step">
-							<inputType id="org.eclipse.cdt.managedbuilder.ui.rcbs.inputtype.737529008" name="Resource Custom Build Step Input Type">
-								<additionalInput kind="additionalinputdependency" paths=""/>
-							</inputType>
-							<outputType id="org.eclipse.cdt.managedbuilder.ui.rcbs.outputtype.1720615799" name="Resource Custom Build Step Output Type"/>
-						</tool>
-					</fileInfo>
 					<sourceEntries>
-						<entry excluding="Projects/STM32F407VE-BRK/UnitTesting/Src/syscalls.c|Projects/STM32F407VE-BRK/UnitTesting/Src/test_usart2.c|Projects/STM32F407VE-BRK/UnitTesting/Src/exclude|Projects/STM32F407VE-BRK/UnitTesting/Src/test_usart.c|Projects/STM32F407VE-BRK/UnitTesting/Test/usart_test.c|Projects/STM32F407VE-BRK/learning/usart/Projects|Drivers/BSP/STM32F407VE-BRK/Src/board.c|Unity/extras/fixture/test|Projects/STM32F407VE-BRK/common|Middlewares/ST" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="Projects/STM32F407VE-BRK/UnitTesting/Test/test_usart.c|Projects/STM32F407VE-BRK/UnitTesting/Src/syscalls.c|Projects/STM32F407VE-BRK/UnitTesting/Src/test_usart2.c|Projects/STM32F407VE-BRK/UnitTesting/Src/exclude|Projects/STM32F407VE-BRK/UnitTesting/Test/usart_test.c|Projects/STM32F407VE-BRK/learning/usart/Projects|Drivers/BSP/STM32F407VE-BRK/Src/board.c|Unity/extras/fixture/test|Projects/STM32F407VE-BRK/common|Middlewares/ST" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

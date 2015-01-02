@@ -191,48 +191,48 @@ TEST_GROUP(GPIOEX_Type);
 TEST_SETUP(GPIOEX_Type){}
 TEST_TEAR_DOWN(GPIOEX_Type){}
 
-TEST(GPIOEX_Type, InitInvalidArgs)
-{
-	int ret;
-	GPIO_ClockProviderTypeDef	clk;
-
-	const GPIO_ConfigTypeDef* config = &PC6_As_Uart6Tx_DefaultConfig;
-	GPIOEX_TypeDef 						ge;
-	// TEST_ASSERT_NOT_NULL(&ge);
-	memset(&ge, 0xA5, sizeof(GPIOEX_TypeDef));
+//TEST(GPIOEX_Type, InitInvalidArgs)
+//{
+//	int ret;
+//	GPIO_ClockProviderTypeDef	clk;
+//
+//	const GPIO_ConfigTypeDef* config = &PC6_As_Uart6Tx_DefaultConfig;
+//	GPIOEX_TypeDef 						ge;
+//	// TEST_ASSERT_NOT_NULL(&ge);
+//	memset(&ge, 0xA5, sizeof(GPIOEX_TypeDef));
+//
+//	ret = GPIOEX_Init(0, config->instance, &config->init, &clk);
+//	TEST_ASSERT_EQUAL(-EINVAL, ret);
+//
+//	ret = GPIOEX_Init(&ge, 0, &config->init, &clk);
+//	TEST_ASSERT_EQUAL(-EINVAL, ret);
+//
+//	ret = GPIOEX_Init(&ge, config->instance, 0, &clk);
+//	TEST_ASSERT_EQUAL(-EINVAL, ret);
+//
+//	ret = GPIOEX_Init(&ge, config->instance, &config->init, 0);
+//	TEST_ASSERT_EQUAL(-EINVAL, ret);
+//}
 	
-	ret = GPIOEX_Init(0, config->instance, &config->init, &clk);
-	TEST_ASSERT_EQUAL(-EINVAL, ret);
-
-	ret = GPIOEX_Init(&ge, 0, &config->init, &clk);
-	TEST_ASSERT_EQUAL(-EINVAL, ret);
 	
-	ret = GPIOEX_Init(&ge, config->instance, 0, &clk);
-	TEST_ASSERT_EQUAL(-EINVAL, ret);
-	
-	ret = GPIOEX_Init(&ge, config->instance, &config->init, 0);
-	TEST_ASSERT_EQUAL(-EINVAL, ret);
-}
-	
-	
-TEST(GPIOEX_Type, Init)
-{
-	int ret;
-	GPIO_ClockProviderTypeDef	clk;
-
-	const GPIO_ConfigTypeDef* config = &PC6_As_Uart6Tx_DefaultConfig;
-	GPIOEX_TypeDef ge;
-	
-	memset(&ge, 0xA5, sizeof(GPIOEX_TypeDef));
-	
-	ret = GPIOEX_Init(&ge, config->instance, &config->init, &clk);
-	
-	TEST_ASSERT_EQUAL(0, ret);
-	TEST_ASSERT_EQUAL_HEX32(config->instance, ge.instance);
-	TEST_ASSERT_EQUAL_MEMORY(&config->init, &ge.init, sizeof(ge.init));
-	TEST_ASSERT_EQUAL_HEX32(&clk, ge.clk);
-	TEST_ASSERT_EQUAL(GPIOEX_STATE_RESET, ge.state);
-}
+//TEST(GPIOEX_Type, Init)
+//{
+//	int ret;
+//	GPIO_ClockProviderTypeDef	clk;
+//
+//	const GPIO_ConfigTypeDef* config = &PC6_As_Uart6Tx_DefaultConfig;
+//	GPIOEX_TypeDef ge;
+//
+//	memset(&ge, 0xA5, sizeof(GPIOEX_TypeDef));
+//
+//	ret = GPIOEX_Init(&ge, config->instance, &config->init, &clk);
+//
+//	TEST_ASSERT_EQUAL(0, ret);
+//	TEST_ASSERT_EQUAL_HEX32(config->instance, ge.instance);
+//	TEST_ASSERT_EQUAL_MEMORY(&config->init, &ge.init, sizeof(ge.init));
+//	TEST_ASSERT_EQUAL_HEX32(&clk, ge.clk);
+//	TEST_ASSERT_EQUAL(GPIOEX_STATE_RESET, ge.state);
+//}
 
 extern const GPIO_ConfigTypeDef PC6_As_Uart6Tx_DefaultConfig;
 
@@ -248,8 +248,8 @@ extern const GPIO_ConfigTypeDef PC6_As_Uart6Tx_DefaultConfig;
 	
 TEST_GROUP_RUNNER(GPIOEX_Type)
 {
-	RUN_TEST_CASE(GPIOEX_Type, InitInvalidArgs);
-	RUN_TEST_CASE(GPIOEX_Type, Init);
+	// RUN_TEST_CASE(GPIOEX_Type, InitInvalidArgs);
+	// RUN_TEST_CASE(GPIOEX_Type, Init);
 	// RUN_TEST_CASE(GPIOEX_Type, InitByConfig); no test for wrapper function
 	// RUN_TEST_CASE(GPIOEX_Type, Dtor);
 }

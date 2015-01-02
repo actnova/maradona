@@ -43,6 +43,13 @@
 /* Includes ------------------------------------------------------------------*/
 #include <stdbool.h>
 #include "stm32f4xx_hal.h"
+
+/*
+ * GPIOEX is a thin wrapper over original gpio interface.
+ *
+ * It encapsulates clock get/put logic.
+ * if one gpio is requested for a bank, the clock is on, otherwise, the clock goes off.
+ */
 	 
 typedef struct 
 {
@@ -76,18 +83,19 @@ typedef struct
 	GPIO_InitTypeDef						init;
 
 	GPIO_ClockProviderTypeDef				*clk;
-	
 	GPIOEX_StateTypeDef						state;
 	
-} GPIOEX_TypeDef;	
+} 	GPIOEX_TypeDef;
 
 extern GPIO_ClockProviderTypeDef GPIO_ClockProvider;
 
+/** struct constructor **/
 int GPIOEX_Init(GPIOEX_TypeDef* gpioex, GPIO_TypeDef* gpiox, const GPIO_InitTypeDef* init, GPIO_ClockProviderTypeDef* clk);
 int GPIOEX_InitByConfig(GPIOEX_TypeDef* gpioex, const GPIO_ConfigTypeDef* config, GPIO_ClockProviderTypeDef* clk);
 
-void	GPIOEX_HAL_Init(GPIOEX_TypeDef* gpioex);
-void 	GPIOEX_HAL_DeInit(GPIOEX_TypeDef* gpioex);
+/** wrapper **/
+void GPIOEX_HAL_Init(GPIOEX_TypeDef* gpioex);
+void GPIOEX_HAL_DeInit(GPIOEX_TypeDef* gpioex);
 
 /** in the following function, use only separate Pin defines, don't OR them **/
 void 	GPIO_Clock_Get(GPIO_ClockProviderTypeDef* clk, GPIO_TypeDef* gpiox, uint32_t Pin);
