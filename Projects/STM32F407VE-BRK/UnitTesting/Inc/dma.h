@@ -37,10 +37,10 @@ typedef struct {
 
 typedef struct {
 	
-	DMA_HandleTypeDef					hdma;			// dma handle
+	DMA_HandleTypeDef			hdma;		// dma handle
 	
-	DMA_ClockProviderTypeDef	*clk;			// reference to dma clock resource manager
-	IRQ_HandleTypeDef					*hirq;		// IRQ handle
+	DMA_ClockProviderTypeDef	*clk;		// reference to dma clock resource manager
+	IRQ_HandleTypeDef			*hirq;		// IRQ handle
 	
 	DMAEX_HandleStateTypeDef	state;		// the state of this struct, SET or RESET
 	

@@ -5,6 +5,7 @@
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.cross.exe.debug.1533609882" moduleId="org.eclipse.cdt.core.settings" name="Debug">
 				<macros>
 					<stringMacro name="CPU_FLAGS" type="VALUE_TEXT" value="-mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16"/>
+					<stringMacro name="SEMIHOSTING_LDFLAGS" type="VALUE_TEXT" value="--specs=rdimon.specs -lc -lrdimon"/>
 				</macros>
 				<externalSettings/>
 				<extensions>
@@ -12,16 +13,18 @@
 					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.cross.exe.debug.1533609882" name="Debug" parent="cdt.managedbuild.config.gnu.cross.exe.debug">
+				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.cross.exe.debug.1533609882" name="Debug" parent="cdt.managedbuild.config.gnu.cross.exe.debug" postannouncebuildStep="" postbuildStep="">
 					<folderInfo id="cdt.managedbuild.config.gnu.cross.exe.debug.1533609882." name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.gnu.cross.exe.debug.98629838" name="Cross GCC" nonInternalBuilderId="cdt.managedbuild.builder.gnu.cross" superClass="cdt.managedbuild.toolchain.gnu.cross.exe.debug">
 							<option id="cdt.managedbuild.option.gnu.cross.prefix.99021184" name="Prefix" superClass="cdt.managedbuild.option.gnu.cross.prefix" value="arm-none-eabi-" valueType="string"/>
 							<option id="cdt.managedbuild.option.gnu.cross.path.1748025046" name="Path" superClass="cdt.managedbuild.option.gnu.cross.path" value="C:\Program Files\GNU Tools ARM Embedded\4.9 2014q4\bin" valueType="string"/>
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.cross.1226028847" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
-							<builder autoBuildTarget="all" buildPath="${workspace_loc:/maradona}/Debug" cleanBuildTarget="clean" id="org.eclipse.cdt.build.core.internal.builder.1769158557" incrementalBuildTarget="all" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="CDT Internal Builder" superClass="org.eclipse.cdt.build.core.internal.builder"/>
+							<builder buildPath="${workspace_loc:/maradona}/Debug" id="cdt.managedbuild.builder.gnu.cross.129090105" keepEnvironmentInBuildfile="false" name="Gnu Make Builder" superClass="cdt.managedbuild.builder.gnu.cross"/>
 							<tool command="gcc -c ${CPU_FLAGS}" id="cdt.managedbuild.tool.gnu.cross.c.compiler.892326195" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler">
 								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.option.optimization.level.138960165" name="Optimization Level" superClass="gnu.c.compiler.option.optimization.level" useByScannerDiscovery="false" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.debugging.level.1239573761" name="Debug Level" superClass="gnu.c.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.max" valueType="enumerated"/>
@@ -40,14 +43,17 @@
 									<listOptionValue builtIn="false" value="STM32F407xx"/>
 									<listOptionValue builtIn="false" value="USE_HAL_DRIVER"/>
 								</option>
+								<option id="gnu.c.compiler.option.debugging.other.794142920" name="Other debugging flags" superClass="gnu.c.compiler.option.debugging.other" useByScannerDiscovery="false" value="-ggdb" valueType="string"/>
+								<option id="gnu.c.compiler.option.dialect.std.839585135" name="Language standard" superClass="gnu.c.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.c.compiler.dialect.default" valueType="enumerated"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.369788854" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.22315171" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler">
 								<option id="gnu.cpp.compiler.option.optimization.level.2041727808" name="Optimization Level" superClass="gnu.cpp.compiler.option.optimization.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.debugging.level.1687939457" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 							</tool>
-							<tool command="gcc ${CPU_FLAGS} -T&quot;${ProjDirPath}/stm32f4_flash.ld&quot;" id="cdt.managedbuild.tool.gnu.cross.c.linker.1736739531" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker">
-								<option id="gnu.c.link.option.ldflags.244495800" name="Linker flags" superClass="gnu.c.link.option.ldflags" value="--specs=rdimon.specs -lc -lrdimon" valueType="string"/>
+							<tool command="gcc ${CPU_FLAGS} ${SEMIHOSTING_LDFLAGS}" commandLinePattern="${ProjDirPath}/ldwin.bat &quot;${COMMAND}&quot; &quot;${FLAGS}&quot; &quot;${OUTPUT_FLAG}&quot; &quot;${OUTPUT}&quot; &quot;${INPUTS}&quot;" id="cdt.managedbuild.tool.gnu.cross.c.linker.1736739531" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker">
+								<option id="gnu.c.link.option.ldflags.244495800" name="Linker flags" superClass="gnu.c.link.option.ldflags" value="-T&quot;${ProjDirPath}/stm32f4_flash.ld&quot;" valueType="string"/>
+								<option id="gnu.c.link.option.noshared.616593011" name="No shared libraries (-static)" superClass="gnu.c.link.option.noshared" value="false" valueType="boolean"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.linker.input.874750472" superClass="cdt.managedbuild.tool.gnu.c.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -61,7 +67,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="Projects/STM32F407VE-BRK/UnitTesting/Test/test_usart.c|Projects/STM32F407VE-BRK/UnitTesting/Src/syscalls.c|Projects/STM32F407VE-BRK/UnitTesting/Src/test_usart2.c|Projects/STM32F407VE-BRK/UnitTesting/Src/exclude|Projects/STM32F407VE-BRK/learning/usart/Src/test_usart.c|Projects/STM32F407VE-BRK/learning/usart/Projects|Drivers/BSP/STM32F407VE-BRK/Src/board.c|Unity/extras/fixture/test|Projects/STM32F407VE-BRK/common|Middlewares/ST" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="Projects/STM32F407VE-BRK/UnitTesting/Src/syscalls.c|Projects/STM32F407VE-BRK/UnitTesting/Test/test_usart.c|Projects/STM32F407VE-BRK/UnitTesting/Src/test_usart2.c|Projects/STM32F407VE-BRK/UnitTesting/Src/exclude|Projects/STM32F407VE-BRK/learning/usart/Src/test_usart.c|Projects/STM32F407VE-BRK/learning/usart/Projects|Drivers/BSP/STM32F407VE-BRK/Src/board.c|Unity/extras/fixture/test|Projects/STM32F407VE-BRK/common|Middlewares/ST" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -71,6 +77,7 @@
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.cross.exe.release.1228416587" moduleId="org.eclipse.cdt.core.settings" name="Release">
 				<macros>
 					<stringMacro name="CPU_FLAGS" type="VALUE_TEXT" value="-mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16"/>
+					<stringMacro name="SEMIHOSTING_LDFLAGS" type="VALUE_TEXT" value="--specs=rdimon.specs -lc -lrdimon"/>
 				</macros>
 				<externalSettings/>
 				<extensions>
@@ -128,7 +135,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="Projects/STM32F407VE-BRK/UnitTesting/Test/test_usart.c|Projects/STM32F407VE-BRK/UnitTesting/Src/syscalls.c|Projects/STM32F407VE-BRK/UnitTesting/Src/test_usart2.c|Projects/STM32F407VE-BRK/UnitTesting/Src/exclude|Projects/STM32F407VE-BRK/UnitTesting/Test/usart_test.c|Projects/STM32F407VE-BRK/learning/usart/Projects|Drivers/BSP/STM32F407VE-BRK/Src/board.c|Unity/extras/fixture/test|Projects/STM32F407VE-BRK/common|Middlewares/ST" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="Projects/STM32F407VE-BRK/UnitTesting/Src/syscalls.c|Projects/STM32F407VE-BRK/UnitTesting/Test/test_usart.c|Projects/STM32F407VE-BRK/UnitTesting/Src/test_usart2.c|Projects/STM32F407VE-BRK/UnitTesting/Src/exclude|Projects/STM32F407VE-BRK/UnitTesting/Test/usart_test.c|Projects/STM32F407VE-BRK/learning/usart/Projects|Drivers/BSP/STM32F407VE-BRK/Src/board.c|Unity/extras/fixture/test|Projects/STM32F407VE-BRK/common|Middlewares/ST" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

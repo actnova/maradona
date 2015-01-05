@@ -61,15 +61,15 @@ extern const struct UARTEX_Operations UARTEX_Ops_DefaultConfig;
 
 struct UARTEX_HandleTypeDef
 {	
-	GPIOEX_TypeDef						*rxpin;
-	GPIOEX_TypeDef						*txpin;
+	gpio_handle_t					*rxpin;
+	gpio_handle_t					*txpin;
 	
 	UART_HandleTypeDef 				huart;
 	
 	DMAEX_HandleTypeDef				*hdmaex_rx;
 	DMAEX_HandleTypeDef				*hdmaex_tx;
 	
-	IRQ_HandleTypeDef					*hirq;
+	IRQ_HandleTypeDef				*hirq;
 	
 	struct UARTEX_Operations	ops;
 	
@@ -86,20 +86,20 @@ typedef struct
 
 ///////////////////////////////////////////////////////////////////////////////
 // UARTEX Handle Init
-int	 UARTEX_Handle_Init(UARTEX_HandleTypeDef						*h,
-												USART_TypeDef										*uart,
-												const UART_InitTypeDef					*init,
-												GPIOEX_TypeDef									*rxpin, 		// DI
-												GPIOEX_TypeDef									*txpin, 		// DI		
-												DMAEX_HandleTypeDef							*hdmaex_rx,	// DI
-												DMAEX_HandleTypeDef							*hdmaex_tx,	// DI
-												IRQ_HandleTypeDef								*hirq,			// DI
-												const struct UARTEX_Operations	*ops);																						
+int	 UARTEX_Handle_Init(UARTEX_HandleTypeDef			*h,
+						USART_TypeDef					*uart,
+						const UART_InitTypeDef			*init,
+						gpio_handle_t					*rxpin, 		// DI
+						gpio_handle_t					*txpin, 		// DI
+						DMAEX_HandleTypeDef				*hdmaex_rx,	// DI
+						DMAEX_HandleTypeDef				*hdmaex_tx,	// DI
+						IRQ_HandleTypeDef				*hirq,			// DI
+						const struct UARTEX_Operations	*ops);
 
 int	UARTEX_Handle_InitByConfig(	UARTEX_HandleTypeDef* 						h,
 																const UART_ConfigTypeDef					*config,	
-																GPIOEX_TypeDef										*rxpin, 				// DI
-																GPIOEX_TypeDef										*txpin, 				// DI		
+																gpio_handle_t										*rxpin, 				// DI
+																gpio_handle_t										*txpin, 				// DI		
 																DMAEX_HandleTypeDef								*hdmaex_rx,			// DI
 																DMAEX_HandleTypeDef								*hdmaex_tx,			// DI
 																IRQ_HandleTypeDef									*hirq,					// DI
@@ -111,8 +111,8 @@ int	UARTEX_Handle_InitByConfig(	UARTEX_HandleTypeDef* 						h,
 typedef struct
 {
 	const UART_ConfigTypeDef* uart;	
-	const GPIO_ConfigTypeDef* rxpin;
-	const GPIO_ConfigTypeDef* txpin;		
+	const gpio_config_t* rxpin;
+	const gpio_config_t* txpin;		
 	const DMA_ConfigTypeDef* dmarx;
 	const IRQ_ConfigTypeDef* dmarx_irq;
 	const DMA_ConfigTypeDef* dmatx;

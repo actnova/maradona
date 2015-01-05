@@ -292,8 +292,8 @@ TEST(UARTEX_Handle, HandleInitInvalidArgs)
 {
   int ret;
 	UARTEX_HandleTypeDef h;
-	GPIOEX_TypeDef rx = PD6_As_Uart2Rx_Default;
-	GPIOEX_TypeDef tx = PD5_As_Uart2Tx_Default;
+	gpio_handle_t rx = PD6_As_Uart2Rx_Default;
+	gpio_handle_t tx = PD5_As_Uart2Tx_Default;
 	DMAEX_HandleTypeDef hdmaex_rx;
 	DMAEX_HandleTypeDef	hdmaex_tx;
 	IRQ_HandleTypeDef	hirq;
@@ -344,8 +344,8 @@ TEST(UARTEX_Handle, HandleInitSuccess)
 {
   int ret;
 	UARTEX_HandleTypeDef h;
-	GPIOEX_TypeDef rx = PD6_As_Uart2Rx_Default;
-	GPIOEX_TypeDef tx = PD5_As_Uart2Tx_Default;
+	gpio_handle_t rx = PD6_As_Uart2Rx_Default;
+	gpio_handle_t tx = PD5_As_Uart2Tx_Default;
 	DMAEX_HandleTypeDef hdmaex_rx;
 	DMAEX_HandleTypeDef	hdmaex_tx;
 	IRQ_HandleTypeDef	hirq;
@@ -373,8 +373,8 @@ TEST(UARTEX_Handle, HandleInitByConfigInvalidArgs)
 	int ret;
 	
 	UARTEX_HandleTypeDef h;
-	GPIOEX_TypeDef rx = PD6_As_Uart2Rx_Default;
-	GPIOEX_TypeDef tx = PD5_As_Uart2Tx_Default;
+	gpio_handle_t rx = PD6_As_Uart2Rx_Default;
+	gpio_handle_t tx = PD5_As_Uart2Tx_Default;
 	DMAEX_HandleTypeDef hdmaex_rx;
 	DMAEX_HandleTypeDef	hdmaex_tx;
 	IRQ_HandleTypeDef	hirq;
@@ -398,8 +398,8 @@ TEST(UARTEX_Handle, HandleInitByConfigSuccess)
 	int ret;
 	
 	UARTEX_HandleTypeDef h;
-	GPIOEX_TypeDef rx = PD6_As_Uart2Rx_Default;
-	GPIOEX_TypeDef tx = PD5_As_Uart2Tx_Default;
+	gpio_handle_t rx = PD6_As_Uart2Rx_Default;
+	gpio_handle_t tx = PD5_As_Uart2Tx_Default;
 	DMAEX_HandleTypeDef hdmaex_rx;
 	DMAEX_HandleTypeDef	hdmaex_tx;
 	IRQ_HandleTypeDef	hirq;

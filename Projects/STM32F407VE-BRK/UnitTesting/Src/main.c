@@ -37,32 +37,20 @@
 #include <stddef.h>
 #include <setjmp.h>
 #include <cmocka.h>
-
 #include "stm32f4xx_hal.h"
 #include "unity_fixture.h"
 
 extern void initialise_monitor_handles(void);
 
 extern void board_init(void);
-// extern void board_main(void);
-
-// A test case that does nothing and succeeds.
-void null_test_success(void **state) {
-	(void*)state;
-}
+extern void run_tests_gpio(void);
 
 int main(void) {
-
 	initialise_monitor_handles();
-
 	board_init();
-
-    const UnitTest tests[] = {
-        unit_test(null_test_success),
-    };
-    return run_tests(tests);
+	run_tests_gpio();
+	return 0;
 }
-
 
 #ifdef USE_FULL_ASSERT
 
@@ -82,13 +70,5 @@ void assert_failed(uint8_t* file, uint32_t line)
 }
 
 #endif
-
-/**
-  * @}
-  */ 
-
-/**
-  * @}
-*/ 
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

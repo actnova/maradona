@@ -325,8 +325,8 @@ void USART2_IRQHandler(void)
 
 UARTEX_HandleTypeDef*	 UARTEX_Handle_Ctor(USART_TypeDef										*uart,
 																					const UART_InitTypeDef					*init,
-																					GPIOEX_TypeDef									*rxpin, 		// DI
-																					GPIOEX_TypeDef									*txpin, 		// DI		
+																					gpio_handle_t									*rxpin, 		// DI
+																					gpio_handle_t									*txpin, 		// DI		
 																					DMAEX_HandleTypeDef							*hdmaex_rx,	// DI
 																					DMAEX_HandleTypeDef							*hdmaex_tx,	// DI
 																					IRQ_HandleTypeDef								*hirq,			// DI
@@ -357,8 +357,8 @@ UARTEX_HandleTypeDef*	 UARTEX_Handle_Ctor(USART_TypeDef										*uart,
 int	UARTEX_Handle_Init( UARTEX_HandleTypeDef						*h,
 												USART_TypeDef										*uart,
 												const UART_InitTypeDef					*init,
-												GPIOEX_TypeDef									*rxpin, 		// DI
-												GPIOEX_TypeDef									*txpin, 		// DI		
+												gpio_handle_t									*rxpin, 		// DI
+												gpio_handle_t									*txpin, 		// DI		
 												DMAEX_HandleTypeDef							*hdmaex_rx,	// DI
 												DMAEX_HandleTypeDef							*hdmaex_tx,	// DI
 												IRQ_HandleTypeDef								*hirq,			// DI
@@ -386,8 +386,8 @@ int	UARTEX_Handle_Init( UARTEX_HandleTypeDef						*h,
 }
 
 UARTEX_HandleTypeDef*	UARTEX_Handle_CtorByConfig(	const UART_ConfigTypeDef					*config,	
-																									GPIOEX_TypeDef										*rxpin, 				// DI
-																									GPIOEX_TypeDef										*txpin, 				// DI		
+																									gpio_handle_t										*rxpin, 				// DI
+																									gpio_handle_t										*txpin, 				// DI		
 																									DMAEX_HandleTypeDef								*hdmaex_rx,			// DI
 																									DMAEX_HandleTypeDef								*hdmaex_tx,			// DI
 																									IRQ_HandleTypeDef									*hirq,					// DI
@@ -398,8 +398,8 @@ UARTEX_HandleTypeDef*	UARTEX_Handle_CtorByConfig(	const UART_ConfigTypeDef					*
 
 int	UARTEX_Handle_InitByConfig(	UARTEX_HandleTypeDef* 						h,
 																const UART_ConfigTypeDef					*config,	
-																GPIOEX_TypeDef										*rxpin, 				// DI
-																GPIOEX_TypeDef										*txpin, 				// DI		
+																gpio_handle_t										*rxpin, 				// DI
+																gpio_handle_t										*txpin, 				// DI		
 																DMAEX_HandleTypeDef								*hdmaex_rx,			// DI
 																DMAEX_HandleTypeDef								*hdmaex_tx,			// DI
 																IRQ_HandleTypeDef									*hirq,					// DI

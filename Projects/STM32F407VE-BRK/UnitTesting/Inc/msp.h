@@ -4,6 +4,7 @@
 /** not sure if this module should be named as msp, or board, or hal. **/
 #include "stm32f4xx_hal.h"
 
+#include "errno_ex.h"
 #include "board_config.h"
 #include "dma.h"
 #include "gpio.h"
@@ -15,7 +16,7 @@ struct msp_factory
 {
 	const Board_ConfigTypeDef*					board_config;
 	
-	GPIO_ClockProviderTypeDef*					gpio_clk;
+	gpio_clock_t*					gpio_clk;
 	DMA_ClockProviderTypeDef*					dma_clk;
 	IRQ_HandleRegistryTypeDef* 					irq_registry;
 	
@@ -31,9 +32,9 @@ struct msp_factory
 	
 	/////////////////////////////////////////////////////////////////////////////
 	// required functions
-	int (*gpioex_init_by_config)(GPIOEX_TypeDef* ge, const GPIO_ConfigTypeDef* config, GPIO_ClockProviderTypeDef* clk);
+	int (*gpioex_init_by_config)(gpio_handle_t* ge, const gpio_config_t* config, gpio_clock_t* clk);
 	int	(*irq_handle_init_by_config)(IRQ_HandleTypeDef* h, const IRQ_ConfigTypeDef* config, IRQ_HandleRegistryTypeDef* registry);
-	int	(*uartex_handle_init_by_config)(UARTEX_HandleTypeDef* h, const UART_ConfigTypeDef	*config, GPIOEX_TypeDef	*rxpin, GPIOEX_TypeDef *txpin, 
+	int	(*uartex_handle_init_by_config)(UARTEX_HandleTypeDef* h, const UART_ConfigTypeDef	*config, gpio_handle_t	*rxpin, gpio_handle_t *txpin, 
 		DMAEX_HandleTypeDef *hdmaex_rx, DMAEX_HandleTypeDef *hdmaex_tx, IRQ_HandleTypeDef *hirq, const struct UARTEX_Operations		*ops);
 	
 	/////////////////////////////////////////////////////////////////////////////

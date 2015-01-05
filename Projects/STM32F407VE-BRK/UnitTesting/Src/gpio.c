@@ -41,248 +41,115 @@
 #include "gpio.h"
 #include "errno_ex.h"
 
-GPIO_ClockProviderTypeDef GPIO_ClockProvider = {{0}};
 
-void	GPIOEX_HAL_Init(GPIOEX_TypeDef* gpioex)
+gpio_clock_t GPIO_ClockProvider = {{0}};
+
+void	GPIOEX_HAL_Init(gpio_handle_t* gpioex)
 {
-	GPIO_Clock_Get(gpioex->clk, gpioex->instance, gpioex->init.Pin);
+	gpio_clk_get(gpioex->clk, gpioex->instance, gpioex->init.Pin);
 	HAL_GPIO_Init(gpioex->instance, &gpioex->init);
 	gpioex->state = GPIOEX_STATE_SET;
 }
 
-void 	GPIOEX_HAL_DeInit(GPIOEX_TypeDef* gpioex)
+void 	GPIOEX_HAL_DeInit(gpio_handle_t* gpioex)
 {
 	HAL_GPIO_DeInit(gpioex->instance, gpioex->init.Pin);
-	GPIO_Clock_Put(gpioex->clk, gpioex->instance, gpioex->init.Pin);
+	gpio_clk_put(gpioex->clk, gpioex->instance, gpioex->init.Pin);
 	gpioex->state = GPIOEX_STATE_RESET;
+
 }
 
-void GPIO_Clock_Get(GPIO_ClockProviderTypeDef* clk, GPIO_TypeDef* gpiox, uint32_t Pin) 
+void gpio_clk_get(gpio_clock_t* clk, GPIO_TypeDef* gpiox, uint32_t Pin) 
 {
 	int index;
 	uint16_t prev, curr;
 	
-	if (gpiox == GPIOA)
-	{
-		index = 0;
-	}
-	else if (gpiox == GPIOB)
-	{
-		index = 1;
-	}
-	else if (gpiox == GPIOC)
-	{
-		index = 2;
-	}
-	else if (gpiox == GPIOD)
-	{
-		index = 3;
-	}
-	else if (gpiox == GPIOE)
-	{	
-		index = 4;
-	}
-	else if (gpiox == GPIOF)
-	{
-		index = 5;
-	}
-	else if (gpiox == GPIOG)
-	{
-		index = 6;
-	}
-	else if (gpiox == GPIOH)
-	{
-		index = 7;
-	}
-	else 
-	{
+	index = _gpio_reg2index(gpiox);
+
+	if (index < 0)
 		return;
-	}
 	
 	prev = clk->bits[index];
 	curr = (clk->bits[index] |= Pin);		/**** need new case, get twice, put once, clock on ****/
 
 	if (prev == 0 && curr != 0)
 	{
-		switch (index)
-		{
-			case 0:
-				__GPIOA_CLK_ENABLE();
-				break;
-			case 1:
-				__GPIOB_CLK_ENABLE();
-				break;
-			case 2:
-				__GPIOC_CLK_ENABLE();
-				break;
-			case 3:
-				__GPIOD_CLK_ENABLE();
-				break;
-			case 4:
-				__GPIOE_CLK_ENABLE();
-				break;
-			case 5:
-				__GPIOF_CLK_ENABLE();
-				break;
-			case 6:
-				__GPIOG_CLK_ENABLE();
-				break;
-			case 7:
-				__GPIOH_CLK_ENABLE();
-				break;
-			default:
-				break;
-		}
+		_gpio_clk_enable(index);
 	}
 }
 
 
-void GPIO_Clock_Put(GPIO_ClockProviderTypeDef* clk, GPIO_TypeDef* gpiox, uint32_t Pin)
+void gpio_clk_put(gpio_clock_t* clk, GPIO_TypeDef* gpiox, uint32_t Pin)
 {
 	int index;
 	uint16_t prev, curr;	
 	
-	if (gpiox == GPIOA)
-	{
-		index = 0;
-	}
-	else if (gpiox == GPIOB)
-	{
-		index = 1;
-	}
-	else if (gpiox == GPIOC)
-	{
-		index = 2;
-	}
-	else if (gpiox == GPIOD)
-	{
-		index = 3;
-	}
-	else if (gpiox == GPIOE)
-	{	
-		index = 4;
-	}
-	else if (gpiox == GPIOF)
-	{
-		index = 5;
-	}
-	else if (gpiox == GPIOG)
-	{
-		index = 6;
-	}
-	else if (gpiox == GPIOH)
-	{
-		index = 7;
-	}
-	else 
-	{
+	index = _gpio_reg2index(gpiox);
+
+	if (index < 0)
 		return;
-	}
 	
 	prev = clk->bits[index];
 	curr = (clk->bits[index] &= ~Pin);
 
 	if (prev != 0 && curr == 0)
 	{
-		switch (index)
-		{
-			case 0:
-				__GPIOA_CLK_DISABLE();
-				break;
-			case 1:
-				__GPIOB_CLK_DISABLE();
-				break;
-			case 2:
-				__GPIOC_CLK_DISABLE();
-				break;
-			case 3:
-				__GPIOD_CLK_DISABLE();
-				break;
-			case 4:
-				__GPIOE_CLK_DISABLE();
-				break;
-			case 5:
-				__GPIOF_CLK_DISABLE();
-				break;
-			case 6:
-				__GPIOG_CLK_DISABLE();
-				break;
-			case 7:
-				__GPIOH_CLK_DISABLE();
-				break;
-			default:
-				break;
-		}
+		_gpio_clk_disable(index);
 	}
 }
 
-bool GPIO_Clock_Status(GPIO_ClockProviderTypeDef* clk, GPIO_TypeDef* gpiox, uint32_t Pin)
+int gpio_clk_status(gpio_clock_t* clk, GPIO_TypeDef* gpiox, uint32_t Pin)
 {
 	int index;
 	
-	if (gpiox == GPIOA)
-	{
-		index = 0;
-	}
-	else if (gpiox == GPIOB)
-	{
-		index = 1;
-	}
-	else if (gpiox == GPIOC)
-	{
-		index = 2;
-	}
-	else if (gpiox == GPIOD)
-	{
-		index = 3;
-	}
-	else if (gpiox == GPIOE)
-	{	
-		index = 4;
-	}
-	else if (gpiox == GPIOF)
-	{
-		index = 5;
-	}
-	else if (gpiox == GPIOG)
-	{
-		index = 6;
-	}
-	else if (gpiox == GPIOH)
-	{
-		index = 7;
-	}
-	else 
-	{
-		return false;
-	}	
+	index = _gpio_reg2index(gpiox);
+
+	if (index < 0)
+		return -1;
+
 	
-	return (clk->bits[index] & Pin) ? true : false;
+	return (clk->bits[index] & Pin) ? 1 : 0;
 }
 
-int GPIOEX_Init(GPIOEX_TypeDef* ge, GPIO_TypeDef* gpiox, const GPIO_InitTypeDef* init, GPIO_ClockProviderTypeDef* clk)
+int GPIOEX_Init(gpio_handle_t* ge, GPIO_TypeDef* gpiox, const GPIO_InitTypeDef* init, gpio_clock_t* clk)
 {
 	if (ge == NULL || gpiox == NULL || init == NULL || clk == NULL)
 		return -EINVAL;
-		
-	memset(ge, 0, sizeof(GPIOEX_TypeDef));
-	
+
+	memset(ge, 0, sizeof(gpio_handle_t));
+
 	ge->instance = gpiox;
 	memmove(&ge->init, init, sizeof(GPIO_InitTypeDef));
 	ge->clk = clk;
 	ge->state = GPIOEX_STATE_RESET;
-	
+
 	return 0;
 }
 
-int GPIOEX_InitByConfig(GPIOEX_TypeDef* ge, const GPIO_ConfigTypeDef* config, GPIO_ClockProviderTypeDef* clk)
+int GPIOEX_InitByConfig(gpio_handle_t* ge, const gpio_config_t* config, gpio_clock_t* clk)
 {
 	return GPIOEX_Init(ge, config->instance, &config->init, clk);
 }
 
+gpio_handle_t* alloc_gpio_handle(const gpio_config_t* conf, gpio_clock_t *clk) {
+
+	gpio_handle_t* h;
+
+	if (conf == NULL || clk == NULL)
+		return NULL;
+
+	h = (gpio_handle_t*)malloc(sizeof(gpio_handle_t));
+	if (h == NULL) return NULL;
+
+	h->instance = conf->instance;
+	memmove(&h->init, &conf->init, sizeof(GPIO_InitTypeDef));
+	h->clk = clk;
+	return h;
+}
+
 /************************ Defaults ********************************************/
 
-const GPIO_ConfigTypeDef	PC6_As_Uart6Tx_DefaultConfig =
+const gpio_config_t	PC6_As_Uart6Tx_DefaultConfig =
 {
 	.instance = GPIOC,
 	.init = 
@@ -296,7 +163,7 @@ const GPIO_ConfigTypeDef	PC6_As_Uart6Tx_DefaultConfig =
 };
 
 
-const GPIOEX_TypeDef	PC6_As_Uart6Tx_Default =
+const gpio_handle_t	PC6_As_Uart6Tx_Default =
 {
 	.instance = GPIOC,
 	.init =
@@ -310,7 +177,7 @@ const GPIOEX_TypeDef	PC6_As_Uart6Tx_Default =
 	.clk = &GPIO_ClockProvider,			// don't forget this! bug!
 };
 
-const GPIO_ConfigTypeDef	PD6_As_Uart2Rx_DefaultConfig = 
+const gpio_config_t	PD6_As_Uart2Rx_DefaultConfig = 
 {
 	.instance = GPIOD,
 	.init =
@@ -323,7 +190,7 @@ const GPIO_ConfigTypeDef	PD6_As_Uart2Rx_DefaultConfig =
 	},
 };
 
-const GPIOEX_TypeDef	PD6_As_Uart2Rx_Default = 
+const gpio_handle_t	PD6_As_Uart2Rx_Default = 
 {
 	.instance = GPIOD,
 	.init =
@@ -337,7 +204,7 @@ const GPIOEX_TypeDef	PD6_As_Uart2Rx_Default =
 	.clk = &GPIO_ClockProvider,
 };
 
-const GPIO_ConfigTypeDef	PD5_As_Uart2Tx_DefaultConfig =
+const gpio_config_t	PD5_As_Uart2Tx_DefaultConfig =
 {
 	.instance = GPIOD,
 	.init =
@@ -350,7 +217,7 @@ const GPIO_ConfigTypeDef	PD5_As_Uart2Tx_DefaultConfig =
 	},
 };
 
-const GPIOEX_TypeDef	PD5_As_Uart2Tx_Default =
+const gpio_handle_t	PD5_As_Uart2Tx_Default =
 {
 	.instance = GPIOD,
 	.init =

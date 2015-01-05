@@ -55,8 +55,8 @@ UARTEX_HandleTypeDef* msp_create_uartex_handle_by_port(struct msp_factory * msp,
 UARTEX_HandleTypeDef* msp_create_uartex_handle(struct msp_factory* msp, const UARTEX_ConfigTypeDef* cfg)															
 {
 	int ret;
-	GPIOEX_TypeDef* rxpinH = NULL;
-	GPIOEX_TypeDef* txpinH = NULL;
+	gpio_handle_t* rxpinH = NULL;
+	gpio_handle_t* txpinH = NULL;
 	DMAEX_HandleTypeDef* dmaExRxH = NULL;
 	DMAEX_HandleTypeDef* dmaExTxH = NULL;
 	IRQ_HandleTypeDef* irqH = NULL;

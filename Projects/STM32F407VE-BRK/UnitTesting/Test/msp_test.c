@@ -122,7 +122,7 @@ TEST(MSP, CreateUARTEXHandleByPortSuccess)
 
 ///////////////////////////////////////////////////////////////////////////////
 // TEST CASES for UARTEX Handle factory methods
-static int mock_gpioex_init_by_config(GPIOEX_TypeDef* gpioex, const GPIO_ConfigTypeDef* config, GPIO_ClockProviderTypeDef* clk)
+static int mock_gpioex_init_by_config(gpio_handle_t* gpioex, const gpio_config_t* config, gpio_clock_t* clk)
 {
 	struct create_uartex_handle_testdata* td = (struct create_uartex_handle_testdata *)get_testdata();
 	
@@ -171,7 +171,7 @@ static int	mock_irq_handle_init_by_config(IRQ_HandleTypeDef* h, const IRQ_Config
 	return 0;
 }
 
-static int mock_uartex_handle_init_by_config(UARTEX_HandleTypeDef* h, const UART_ConfigTypeDef	*config, GPIOEX_TypeDef	*rxpin, GPIOEX_TypeDef *txpin, 
+static int mock_uartex_handle_init_by_config(UARTEX_HandleTypeDef* h, const UART_ConfigTypeDef	*config, gpio_handle_t	*rxpin, gpio_handle_t *txpin, 
 		DMAEX_HandleTypeDef *hdmaex_rx, DMAEX_HandleTypeDef *hdmaex_tx, IRQ_HandleTypeDef *hirq, const struct UARTEX_Operations	*ops) {
 	
 	struct create_uartex_handle_testdata* td = (struct create_uartex_handle_testdata *)get_testdata();
@@ -442,7 +442,7 @@ TEST(MSP, DestroyUARTEXHandleFull)
 // DMA Handle Factory Methods
 TEST(MSP, CreateDMAEXHandle)
 {
-	GPIO_ClockProviderTypeDef			gpio_clk;
+	gpio_clock_t			gpio_clk;
 	DMA_ClockProviderTypeDef			dma_clk;
 	IRQ_HandleRegistryTypeDef			registry;
 	DMA_ConfigTypeDef							dma_config;
@@ -487,7 +487,7 @@ TEST(MSP, CreateDMAEXHandle)
 
 TEST(MSP, DestroyDMAEXHandle)
 {
-	GPIO_ClockProviderTypeDef			gpio_clk;
+	gpio_clock_t			gpio_clk;
 	DMA_ClockProviderTypeDef			dma_clk;
 	IRQ_HandleRegistryTypeDef			registry;
 	DMA_ConfigTypeDef							dma_config;
@@ -531,7 +531,7 @@ TEST_GROUP_RUNNER(MSP)
 	
 	Board_ConfigTypeDef board = { .uart2 = &cfg, };
 	
-	GPIO_ClockProviderTypeDef gpio_clk;
+	gpio_clock_t gpio_clk;
 	DMA_ClockProviderTypeDef dma_clk;
 	IRQ_HandleRegistryTypeDef irq_registry;
 	

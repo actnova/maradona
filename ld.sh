@@ -1,0 +1,1 @@
+$1 $2 $(arm-none-eabi-nm $5 | awk '/__wrap_/ { print $3}' | sed 's/__wrap_/-Wl,--wrap=/g') $3 $4 $5

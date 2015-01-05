@@ -51,24 +51,22 @@
  * if one gpio is requested for a bank, the clock is on, otherwise, the clock goes off.
  */
 	 
-typedef struct 
-{
+typedef struct {
+
 	uint16_t 				bits[8];	/** A to H **/
 	
-} GPIO_ClockProviderTypeDef;
+} gpio_clock_t;
 
-typedef enum
-{
+typedef enum {
 	GPIOEX_STATE_RESET = 0,
 	GPIOEX_STATE_SET,
-} 	GPIOEX_StateTypeDef;
+} gpio_state_t;
 
 typedef struct
 {
-	GPIO_TypeDef			*instance;
-	GPIO_InitTypeDef		init;
-	
-} GPIO_ConfigTypeDef;
+	GPIO_TypeDef		*instance;
+	GPIO_InitTypeDef	init;
+} gpio_config_t;
 
 /*
  * GPIO_TypeDef is actually the register map
@@ -79,36 +77,44 @@ typedef struct
 	 
 typedef struct
 {
-	GPIO_TypeDef  							*instance;
-	GPIO_InitTypeDef						init;
+	GPIO_TypeDef  		*instance;
+	GPIO_InitTypeDef	init;
+	gpio_clock_t		*clk;
+	gpio_state_t		state;
 
-	GPIO_ClockProviderTypeDef				*clk;
-	GPIOEX_StateTypeDef						state;
-	
-} 	GPIOEX_TypeDef;
+} gpio_handle_t;
 
-extern GPIO_ClockProviderTypeDef GPIO_ClockProvider;
+extern gpio_clock_t GPIO_ClockProvider;
 
 /** struct constructor **/
-int GPIOEX_Init(GPIOEX_TypeDef* gpioex, GPIO_TypeDef* gpiox, const GPIO_InitTypeDef* init, GPIO_ClockProviderTypeDef* clk);
-int GPIOEX_InitByConfig(GPIOEX_TypeDef* gpioex, const GPIO_ConfigTypeDef* config, GPIO_ClockProviderTypeDef* clk);
+int GPIOEX_Init(gpio_handle_t* gpioex, GPIO_TypeDef* gpiox, const GPIO_InitTypeDef* init, gpio_clock_t* clk);
+int GPIOEX_InitByConfig(gpio_handle_t* gpioex, const gpio_config_t* config, gpio_clock_t* clk);
+
+gpio_handle_t* alloc_gpio_handle(const gpio_config_t* conf, gpio_clock_t *clk);
+
 
 /** wrapper **/
-void GPIOEX_HAL_Init(GPIOEX_TypeDef* gpioex);
-void GPIOEX_HAL_DeInit(GPIOEX_TypeDef* gpioex);
+void GPIOEX_HAL_Init(gpio_handle_t* gpioex);
+void GPIOEX_HAL_DeInit(gpio_handle_t* gpioex);
 
 /** in the following function, use only separate Pin defines, don't OR them **/
-void 	GPIO_Clock_Get(GPIO_ClockProviderTypeDef* clk, GPIO_TypeDef* gpiox, uint32_t Pin);
-void 	GPIO_Clock_Put(GPIO_ClockProviderTypeDef* clk, GPIO_TypeDef* gpiox, uint32_t Pin);
-bool	GPIO_Clock_Status(GPIO_ClockProviderTypeDef* clk, GPIO_TypeDef* gpiox, uint32_t Pin);
+void gpio_clk_get(gpio_clock_t* clk, GPIO_TypeDef* gpiox, uint32_t Pin);
+void gpio_clk_put(gpio_clock_t* clk, GPIO_TypeDef* gpiox, uint32_t Pin);
+int	gpio_clk_status(gpio_clock_t* clk, GPIO_TypeDef* gpiox, uint32_t Pin);
 
-const extern GPIO_ConfigTypeDef	PC6_As_Uart6Tx_DefaultConfig;
-const extern GPIO_ConfigTypeDef	PD6_As_Uart2Rx_DefaultConfig;
-const extern GPIO_ConfigTypeDef	PD5_As_Uart2Tx_DefaultConfig;
+/** gpio stub function **/
+int _gpio_reg2index(GPIO_TypeDef* gpiox);
+int _gpio_clk_enable(int index);
+int _gpio_clk_disable(int index);
 
-const extern GPIOEX_TypeDef	PC6_As_Uart6Tx_Default;
-const extern GPIOEX_TypeDef	PD6_As_Uart2Rx_Default;
-const extern GPIOEX_TypeDef	PD5_As_Uart2Tx_Default;
+
+const extern gpio_config_t	PC6_As_Uart6Tx_DefaultConfig;
+const extern gpio_config_t	PD6_As_Uart2Rx_DefaultConfig;
+const extern gpio_config_t	PD5_As_Uart2Tx_DefaultConfig;
+
+const extern gpio_handle_t	PC6_As_Uart6Tx_Default;
+const extern gpio_handle_t	PD6_As_Uart2Rx_Default;
+const extern gpio_handle_t	PD5_As_Uart2Tx_Default;
 
 
 // void MX_GPIO_Init(void);

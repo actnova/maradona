@@ -5,7 +5,7 @@
 #include "gpio.h"
 #include "usart.h"
 
-static GPIOEX_TypeDef rxpin_usart3 =
+static gpio_handle_t rxpin_usart3 =
 {
 	.instance = GPIOD,
 	.init =
@@ -14,12 +14,12 @@ static GPIOEX_TypeDef rxpin_usart3 =
 		.Mode = GPIO_MODE_AF_PP,
 		.Pull = GPIO_NOPULL,
 		.Speed = GPIO_SPEED_LOW,
-		.Alternate = GPIO_AF7_USART2,			
+		.Alternate = GPIO_AF7_USART2,
 	},
 	.clk = &GPIO_ClockProvider,
 };
 
-static GPIOEX_TypeDef txpin_usart3 = 
+static gpio_handle_t txpin_usart3 = 
 {
 	.instance = GPIOD,
 	.init =
@@ -88,7 +88,7 @@ int unity_output_char(int a)
 //	uint8_t chr = a;
 //
 //	HAL_UART_Transmit(&huartex3.huart, &chr, 1, 10);
-//	return a;
+//	return a;;
 	return putc(a, stdout);
 }
 
