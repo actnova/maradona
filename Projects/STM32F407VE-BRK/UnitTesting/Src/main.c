@@ -40,13 +40,19 @@
 #include "stm32f4xx_hal.h"
 #include "unity_fixture.h"
 
+#ifdef SEMIHOSTING
 extern void initialise_monitor_handles(void);
+#endif
 
 extern void board_init(void);
 extern void run_tests_gpio(void);
 
 int main(void) {
+
+#ifdef SEMIHOSTING
 	initialise_monitor_handles();
+#endif
+
 	board_init();
 	run_tests_gpio();
 	return 0;

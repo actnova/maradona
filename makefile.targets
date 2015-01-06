@@ -1,0 +1,22 @@
+all+: update-lwrap maradona
+	@echo 'Building target: $@'
+	# arm-none-eabi-objcopy -O ihex maradona maradona.hex
+	# arm-none-eabi-objcopy -O binary maradona maradona.bin
+	@echo ' '
+	@echo ' Final check for wrappers'
+	@arm-none-eabi-nm maradona | awk '/__wrap_/ { print "  " $$3 }'
+	@echo ' '
+	
+update-lwrap: $(OBJS) $(USER_OBJS)
+	@echo 'Building target: $@'
+	$(eval LWRAP=$(shell arm-none-eabi-nm $(OBJS) $(USER_OBJS) $(LIBS) | \
+						 awk '/__wrap_/ { printf "%s ", $$3 }' | \
+						 sed 's/__wrap_/-Wl,--wrap=/g'))
+	# $$LWRAP is: ${LWRAP}
+	@echo ' '
+	
+clean+: clean
+	-$(RM) maradona.bin maradona.hex	
+	
+.PHONY: all+ clean+ update-lwrap
+

@@ -24,7 +24,7 @@
 							<option id="cdt.managedbuild.option.gnu.cross.prefix.99021184" name="Prefix" superClass="cdt.managedbuild.option.gnu.cross.prefix" value="arm-none-eabi-" valueType="string"/>
 							<option id="cdt.managedbuild.option.gnu.cross.path.1748025046" name="Path" superClass="cdt.managedbuild.option.gnu.cross.path" value="C:\Program Files\GNU Tools ARM Embedded\4.9 2014q4\bin" valueType="string"/>
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.cross.1226028847" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
-							<builder buildPath="${workspace_loc:/maradona}/Debug" id="cdt.managedbuild.builder.gnu.cross.129090105" keepEnvironmentInBuildfile="false" name="Gnu Make Builder" superClass="cdt.managedbuild.builder.gnu.cross"/>
+							<builder buildPath="${workspace_loc:/maradona}/Debug" cleanBuildTarget="clean+" id="cdt.managedbuild.builder.gnu.cross.129090105" incrementalBuildTarget="all+" keepEnvironmentInBuildfile="true" name="Gnu Make Builder" parallelBuildOn="true" parallelizationNumber="optimal" superClass="cdt.managedbuild.builder.gnu.cross"/>
 							<tool command="gcc -c ${CPU_FLAGS}" id="cdt.managedbuild.tool.gnu.cross.c.compiler.892326195" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler">
 								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.option.optimization.level.138960165" name="Optimization Level" superClass="gnu.c.compiler.option.optimization.level" useByScannerDiscovery="false" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.debugging.level.1239573761" name="Debug Level" superClass="gnu.c.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.max" valueType="enumerated"/>
@@ -42,6 +42,8 @@
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1254269665" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="STM32F407xx"/>
 									<listOptionValue builtIn="false" value="USE_HAL_DRIVER"/>
+									<listOptionValue builtIn="false" value="SEMIHOSTING"/>
+									<listOptionValue builtIn="false" value="USE_MOCHA"/>
 								</option>
 								<option id="gnu.c.compiler.option.debugging.other.794142920" name="Other debugging flags" superClass="gnu.c.compiler.option.debugging.other" useByScannerDiscovery="false" value="-ggdb" valueType="string"/>
 								<option id="gnu.c.compiler.option.dialect.std.839585135" name="Language standard" superClass="gnu.c.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.c.compiler.dialect.default" valueType="enumerated"/>
@@ -51,7 +53,7 @@
 								<option id="gnu.cpp.compiler.option.optimization.level.2041727808" name="Optimization Level" superClass="gnu.cpp.compiler.option.optimization.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.debugging.level.1687939457" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 							</tool>
-							<tool command="gcc ${CPU_FLAGS} ${SEMIHOSTING_LDFLAGS}" commandLinePattern="${ProjDirPath}/ldwin.bat &quot;${COMMAND}&quot; &quot;${FLAGS}&quot; &quot;${OUTPUT_FLAG}&quot; &quot;${OUTPUT}&quot; &quot;${INPUTS}&quot;" id="cdt.managedbuild.tool.gnu.cross.c.linker.1736739531" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker">
+							<tool command="gcc ${CPU_FLAGS} ${SEMIHOSTING_LDFLAGS}" commandLinePattern="${COMMAND} ${FLAGS} ${LWRAP} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS} " id="cdt.managedbuild.tool.gnu.cross.c.linker.1736739531" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker">
 								<option id="gnu.c.link.option.ldflags.244495800" name="Linker flags" superClass="gnu.c.link.option.ldflags" value="-T&quot;${ProjDirPath}/stm32f4_flash.ld&quot;" valueType="string"/>
 								<option id="gnu.c.link.option.noshared.616593011" name="No shared libraries (-static)" superClass="gnu.c.link.option.noshared" value="false" valueType="boolean"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.linker.input.874750472" superClass="cdt.managedbuild.tool.gnu.c.linker.input">
