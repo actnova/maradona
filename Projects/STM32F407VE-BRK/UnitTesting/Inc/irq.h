@@ -28,23 +28,24 @@ typedef enum
 
 typedef struct
 {
-	IRQn_Type														irqn;
-	uint32_t														preempt_priority;
-	uint32_t														sub_priority;
+	IRQn_Type						irqn;
+	uint32_t						preempt_priority;
+	uint32_t						sub_priority;
 	
 } IRQ_ConfigTypeDef;
 
 typedef struct
 {
-	IRQn_Type 													irqn;
-	uint32_t 														preempt_priority;
-	uint32_t 														sub_priority;
+	IRQn_Type 						irqn;
+	uint32_t 						preempt_priority;
+	uint32_t 						sub_priority;
 	
-	IRQ_HandleRegistryTypeDef*					registry;
+	IRQ_HandleRegistryTypeDef*		registry;
 	
 	/** these are runtime states		**/
-	void*																irqh_obj;
-	IRQ_HandleStateTypeDef							state;
+	void*							irqh_obj;
+
+	IRQ_HandleStateTypeDef			state;
 	
 } IRQ_HandleTypeDef;	
 

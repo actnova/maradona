@@ -54,7 +54,7 @@
 								<option id="gnu.cpp.compiler.option.debugging.level.1687939457" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 							</tool>
 							<tool command="gcc ${CPU_FLAGS} ${SEMIHOSTING_LDFLAGS}" commandLinePattern="${COMMAND} ${FLAGS} ${LWRAP} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS} " id="cdt.managedbuild.tool.gnu.cross.c.linker.1736739531" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker">
-								<option id="gnu.c.link.option.ldflags.244495800" name="Linker flags" superClass="gnu.c.link.option.ldflags" value="-T&quot;${ProjDirPath}/stm32f4_flash.ld&quot;" valueType="string"/>
+								<option id="gnu.c.link.option.ldflags.244495800" name="Linker flags" superClass="gnu.c.link.option.ldflags" value="-T&quot;${ProjDirPath}/STM32F407VE_FLASH.ld&quot;" valueType="string"/>
 								<option id="gnu.c.link.option.noshared.616593011" name="No shared libraries (-static)" superClass="gnu.c.link.option.noshared" value="false" valueType="boolean"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.linker.input.874750472" superClass="cdt.managedbuild.tool.gnu.c.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>

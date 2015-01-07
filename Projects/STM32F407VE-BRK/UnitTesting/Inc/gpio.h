@@ -55,7 +55,7 @@ typedef struct {
 
 	uint16_t 				bits[8];	/** A to H **/
 	
-} gpio_clock_t;
+} gpio_man_t;
 
 typedef enum {
 	GPIOEX_STATE_RESET = 0,
@@ -79,28 +79,32 @@ typedef struct
 {
 	GPIO_TypeDef  		*instance;
 	GPIO_InitTypeDef	init;
-	gpio_clock_t		*clk;
+	gpio_man_t			*man;
 	gpio_state_t		state;
 
 } gpio_handle_t;
 
-extern gpio_clock_t GPIO_ClockProvider;
+extern gpio_man_t GPIO_Manager;
 
 /** struct constructor **/
-int GPIOEX_Init(gpio_handle_t* gpioex, GPIO_TypeDef* gpiox, const GPIO_InitTypeDef* init, gpio_clock_t* clk);
-int GPIOEX_InitByConfig(gpio_handle_t* gpioex, const gpio_config_t* config, gpio_clock_t* clk);
+int GPIOEX_Init(gpio_handle_t* gpioex, GPIO_TypeDef* gpiox, const GPIO_InitTypeDef* init, gpio_man_t* clk);
+int GPIOEX_InitByConfig(gpio_handle_t* gpioex, const gpio_config_t* config, gpio_man_t* clk);
 
-gpio_handle_t* alloc_gpio_handle(const gpio_config_t* conf, gpio_clock_t *clk);
-
+gpio_handle_t* gpio_create_handle(const gpio_config_t* conf, gpio_man_t *man);
+int gpio_destroy_handle(gpio_handle_t* h);
 
 /** wrapper **/
 void GPIOEX_HAL_Init(gpio_handle_t* gpioex);
 void GPIOEX_HAL_DeInit(gpio_handle_t* gpioex);
 
+
+
 /** in the following function, use only separate Pin defines, don't OR them **/
-void gpio_clk_get(gpio_clock_t* clk, GPIO_TypeDef* gpiox, uint32_t Pin);
-void gpio_clk_put(gpio_clock_t* clk, GPIO_TypeDef* gpiox, uint32_t Pin);
-int	gpio_clk_status(gpio_clock_t* clk, GPIO_TypeDef* gpiox, uint32_t Pin);
+
+int gpio_man_init(gpio_man_t* man);
+int gpio_request_pin(gpio_man_t* man, GPIO_TypeDef* gpio, uint32_t pin);
+int gpio_release_pin(gpio_man_t* man, GPIO_TypeDef* gpio, uint32_t pin);
+int	gpio_pin_in_use(gpio_man_t* man, GPIO_TypeDef* gpio, uint32_t pin);
 
 /** gpio stub function **/
 int _gpio_reg2index(GPIO_TypeDef* gpiox);

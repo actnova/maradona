@@ -16,7 +16,7 @@ static gpio_handle_t rxpin_usart3 =
 		.Speed = GPIO_SPEED_LOW,
 		.Alternate = GPIO_AF7_USART2,
 	},
-	.clk = &GPIO_ClockProvider,
+	.man = &GPIO_Manager,
 };
 
 static gpio_handle_t txpin_usart3 = 
@@ -30,7 +30,7 @@ static gpio_handle_t txpin_usart3 =
 		.Speed = GPIO_SPEED_LOW,
 		.Alternate = GPIO_AF7_USART2,			
 	},
-	.clk = &GPIO_ClockProvider,
+	.man = &GPIO_Manager,
 };
 
 static UARTEX_HandleTypeDef huartex3 = 
@@ -115,7 +115,7 @@ void board_init(void)
 	
   /* Initialize all configured peripherals */
   HAL_UART_Init(&huartex3.huart);	
-	UnityMain(1, 0, RunAllTests);
+  UnityMain(1, 0, RunAllTests);
 }
 
 //void board_main(void)

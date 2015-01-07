@@ -33,8 +33,6 @@ void* IRQ_HandlerObject_Get(IRQ_HandleRegistryTypeDef* registry, IRQn_Type irqn)
 	return registry->irqh_obj[irqn];
 }
 
-
-
 void IRQ_HAL_Init(IRQ_HandleTypeDef* hirq, void* irqh_obj)
 {
 	assert_param(hirq);

@@ -10,14 +10,14 @@
 		the latter looks like char device/drivers in kernel.
 **/
 
-struct device;										// simulate cdev & inode in kernel
-struct file;											// simulate file in kernel
+struct device;								// simulate cdev & inode in kernel
+struct file;								// simulate file in kernel
 struct file_operations;						// simulate file_operations in kernel
 
 struct device
 {
-	const char											*name;		/** device name, such as "UART2" 	**/
-	const	int												number;		/** device number if any					**/
+	const char							*name;		/** device name, such as "UART2" 	**/
+	const int							number;		/** device number if any					**/
 	const struct file_operations		*f_ops;
 	struct file_operations* const		test;
 };

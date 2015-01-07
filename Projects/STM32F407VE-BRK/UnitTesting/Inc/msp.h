@@ -14,11 +14,11 @@
 
 struct msp_factory
 {
-	const Board_ConfigTypeDef*					board_config;
+	const Board_ConfigTypeDef*		board_config;
 	
-	gpio_clock_t*					gpio_clk;
-	DMA_ClockProviderTypeDef*					dma_clk;
-	IRQ_HandleRegistryTypeDef* 					irq_registry;
+	gpio_man_t*						gpio_clk;
+	DMA_ClockProviderTypeDef*		dma_clk;
+	IRQ_HandleRegistryTypeDef* 		irq_registry;
 	
 	
 	/////////////////////////////////////////////////////////////////////////////
@@ -32,7 +32,7 @@ struct msp_factory
 	
 	/////////////////////////////////////////////////////////////////////////////
 	// required functions
-	int (*gpioex_init_by_config)(gpio_handle_t* ge, const gpio_config_t* config, gpio_clock_t* clk);
+	// int (*gpioex_init_by_config)(gpio_handle_t* h, const gpio_config_t* conf, gpio_man_t* man);
 	int	(*irq_handle_init_by_config)(IRQ_HandleTypeDef* h, const IRQ_ConfigTypeDef* config, IRQ_HandleRegistryTypeDef* registry);
 	int	(*uartex_handle_init_by_config)(UARTEX_HandleTypeDef* h, const UART_ConfigTypeDef	*config, gpio_handle_t	*rxpin, gpio_handle_t *txpin, 
 		DMAEX_HandleTypeDef *hdmaex_rx, DMAEX_HandleTypeDef *hdmaex_tx, IRQ_HandleTypeDef *hirq, const struct UARTEX_Operations		*ops);

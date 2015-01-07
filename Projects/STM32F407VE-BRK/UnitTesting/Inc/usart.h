@@ -61,21 +61,21 @@ extern const struct UARTEX_Operations UARTEX_Ops_DefaultConfig;
 
 struct UARTEX_HandleTypeDef
 {	
-	gpio_handle_t					*rxpin;
-	gpio_handle_t					*txpin;
+	gpio_handle_t				*rxpin;
+	gpio_handle_t				*txpin;
 	
-	UART_HandleTypeDef 				huart;
+	UART_HandleTypeDef 			huart;
 	
-	DMAEX_HandleTypeDef				*hdmaex_rx;
-	DMAEX_HandleTypeDef				*hdmaex_tx;
+	DMAEX_HandleTypeDef			*hdmaex_rx;
+	DMAEX_HandleTypeDef			*hdmaex_tx;
 	
-	IRQ_HandleTypeDef				*hirq;
+	IRQ_HandleTypeDef			*hirq;
 	
 	struct UARTEX_Operations	ops;
 	
 	/** This field are used for test/mock					**/
 	/** UART Ex Operations never touch this field **/
-	void											*testdata;					
+	void						*testdata;
 };
 
 typedef struct
@@ -97,13 +97,13 @@ int	 UARTEX_Handle_Init(UARTEX_HandleTypeDef			*h,
 						const struct UARTEX_Operations	*ops);
 
 int	UARTEX_Handle_InitByConfig(	UARTEX_HandleTypeDef* 						h,
-																const UART_ConfigTypeDef					*config,	
-																gpio_handle_t										*rxpin, 				// DI
-																gpio_handle_t										*txpin, 				// DI		
-																DMAEX_HandleTypeDef								*hdmaex_rx,			// DI
-																DMAEX_HandleTypeDef								*hdmaex_tx,			// DI
-																IRQ_HandleTypeDef									*hirq,					// DI
-																const struct UARTEX_Operations		*ops);
+								const UART_ConfigTypeDef					*config,
+								gpio_handle_t										*rxpin, 				// DI
+								gpio_handle_t										*txpin, 				// DI
+								DMAEX_HandleTypeDef								*hdmaex_rx,			// DI
+								DMAEX_HandleTypeDef								*hdmaex_tx,			// DI
+								IRQ_HandleTypeDef									*hirq,					// DI
+								const struct UARTEX_Operations		*ops);
 
 																					
 ///////////////////////////////////////////////////////////////////////////////

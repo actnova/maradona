@@ -243,12 +243,12 @@ static void CreateTestData(void)
 	
 	struct msp_factory msp = {
 		
-		.gpio_clk = &GPIO_ClockProvider,
+		.gpio_clk = &GPIO_Manager,
 		.dma_clk = &DMA_ClockProvider,
 		.irq_registry = &IRQ_HandlerObjectRegistry,
 		
 		.create_dmaex_handle = msp_create_dmaex_handle,
-		.gpioex_init_by_config = GPIOEX_InitByConfig,		
+		//TODO .gpioex_init_by_config = GPIOEX_InitByConfig,
 		.irq_handle_init_by_config = IRQ_Handle_InitByConfig,
 		.uartex_handle_init_by_config = UARTEX_Handle_InitByConfig,
 	};
@@ -264,13 +264,13 @@ static void DestroyTestData(void)
 {	
 	struct msp_factory msp = {
 		
-		.gpio_clk = &GPIO_ClockProvider,
+		.gpio_clk = &GPIO_Manager,
 		.dma_clk = &DMA_ClockProvider,
 		.irq_registry = &IRQ_HandlerObjectRegistry,
 		
 		.create_dmaex_handle = msp_create_dmaex_handle,
 		.destroy_dmaex_handle = msp_destroy_dmaex_handle,
-		.gpioex_init_by_config = GPIOEX_InitByConfig,		
+		//TODO .gpioex_init_by_config = GPIOEX_InitByConfig,
 		.irq_handle_init_by_config = IRQ_Handle_InitByConfig,
 		.uartex_handle_init_by_config = UARTEX_Handle_InitByConfig,
 	};
@@ -459,12 +459,12 @@ TEST_SETUP(UART_DMA_TxRx)
 	
 	struct msp_factory msp = {
 		
-		.gpio_clk = &GPIO_ClockProvider,
+		.gpio_clk = &GPIO_Manager,
 		.dma_clk = &DMA_ClockProvider,
 		.irq_registry = &IRQ_HandlerObjectRegistry,
 		
 		.create_dmaex_handle = msp_create_dmaex_handle,
-		.gpioex_init_by_config = GPIOEX_InitByConfig,		
+		//TODO .gpioex_init_by_config = GPIOEX_InitByConfig,
 		.irq_handle_init_by_config = IRQ_Handle_InitByConfig,
 		.uartex_handle_init_by_config = UARTEX_Handle_InitByConfig,
 	};
@@ -479,12 +479,12 @@ TEST_TEAR_DOWN(UART_DMA_TxRx)
 	
 	struct msp_factory msp = {
 		
-		.gpio_clk = &GPIO_ClockProvider,
+		.gpio_clk = &GPIO_Manager,
 		.dma_clk = &DMA_ClockProvider,
 		.irq_registry = &IRQ_HandlerObjectRegistry,
 		
 		.create_dmaex_handle = msp_create_dmaex_handle,
-		.gpioex_init_by_config = GPIOEX_InitByConfig,		
+		//TODO .gpioex_init_by_config = GPIOEX_InitByConfig,
 		.irq_handle_init_by_config = IRQ_Handle_InitByConfig,
 		.uartex_handle_init_by_config = UARTEX_Handle_InitByConfig,
 	};

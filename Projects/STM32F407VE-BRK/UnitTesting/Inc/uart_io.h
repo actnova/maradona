@@ -27,44 +27,44 @@ Think about yourself as a USER, not an OWNER. Do one thing, Do it well!
 **/
 struct uart_device {
 	
-	struct device						dev;
+	struct device				dev;
 	
 	struct msp_factory			*msp;
 	UARTEX_HandleTypeDef		*handle;
 	
-	char										*rbuf[2];		/** two pointers **/
-	const int								rbuf_size;
+	char						*rbuf[2];		/** two pointers **/
+	const int					rbuf_size;
 	
-	char										*rx_upper;
-	char 										*rx_head;
-	char										*rx_tail;	
+	char						*rx_upper;
+	char 						*rx_head;
+	char						*rx_tail;
 	
-	char										*tbuf[2];		/** two pointers **/
-	const int 							tbuf_size;
+	char						*tbuf[2];		/** two pointers **/
+	const int 					tbuf_size;
 	
-	char										*tx_head;
-	char										*tx_tail;
+	char						*tx_head;
+	char						*tx_tail;
 	
-	int											open_count;
+	int							open_count;
 	
 	/////////////////////////////////////////////////////////////////////////////
 	// test data
-	void										*testdata;								
+	void						*testdata;
 };
 
 /** tested **/
-int 									uart_device_read(struct uart_device * udev, char* buffer, size_t size);
-int 									uart_device_write(struct uart_device * udev, char* buffer, size_t size);
-int 									uart_device_open(struct device * dev, struct file * filp);
-int										uart_device_release(struct device * dev, struct file * filp);
+int uart_device_read(struct uart_device * udev, char* buffer, size_t size);
+int uart_device_write(struct uart_device * udev, char* buffer, size_t size);
+int uart_device_open(struct device * dev, struct file * filp);
+int	uart_device_release(struct device * dev, struct file * filp);
 
 
 /** not tested yet **/
-void									UART_IO_DeInitAll(void);
-void 									UART_IO_Task(void);
+void UART_IO_DeInitAll(void);
+void UART_IO_Task(void);
 
-int										UART_IO_FlushRx(struct uart_device* udev);
-int										UART_IO_FlushTx(struct uart_device* uio);
+int	UART_IO_FlushRx(struct uart_device* udev);
+int	UART_IO_FlushTx(struct uart_device* uio);
 //int 									UART_IO_Close(struct uart_device* uio);
 
 //UART_HandleTypeDef*			UART_IO_GetUartHandle(uart_device* h);

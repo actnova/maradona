@@ -14,8 +14,6 @@
 #include "msp.h"
 
 
-
-
 // These comments are copied from .... I have no idea.
 
 //int main(int argc, char* argv[]) {
@@ -60,6 +58,8 @@
 //	return mock();
 //}
 
+
+
 MOCHA(int, _gpio_clk_enable, int index) {		// This is mock function
 
 	MOCHA_RETURN(_gpio_clk_enable, index);		// This macro call real function if mock off
@@ -67,44 +67,126 @@ MOCHA(int, _gpio_clk_enable, int index) {		// This is mock function
 	return mock();								// return mocked return value predefined by test case
 }
 
-void test_gpio_clk_get(void** state) {			// This is a test case
+MOCHA(int, _gpio_clk_disable, int index) {
 
-	gpio_clock_t clk;							// set up stage
-	memset(&clk, 0, sizeof(clk));
+	MOCHA_RETURN(_gpio_clk_disable, index);
+	check_expected(index);
+	return mock();
+}
 
-	MOCHA_ON(_gpio_clk_enable);					// turn on mocking function for _gpio_clk_enable
+/*
+ * setup and teardown
+ */
+
+static void setup(void** state) {
+
+	MOCHA_ON(_gpio_clk_enable);
+	MOCHA_ON(_gpio_clk_disable);
+}
+
+static void teardown(void** state) {
+
+	MOCHA_OFF(_gpio_clk_enable);
+	MOCHA_OFF(_gpio_clk_disable);
+}
+
+/*
+ * Test cases
+ */
+void test_gpio_man_init_success(void** state) {
+
+	gpio_man_t man;
+	assert_true(gpio_man_init(&man) == 0);
+}
+
+void test_gpio_man_init_fail(void** state) {
+
+	assert_true(gpio_man_init(NULL) < 0);
+}
+
+void test_gpio_request_invalid_args(void** state) {
+
+	assert_true(0 > gpio_request_pin(NULL, GPIOE, GPIO_PIN_6));
+	assert_true(0 > gpio_request_pin((gpio_man_t*)1, (GPIO_TypeDef*)0xDEADBEEF, GPIO_PIN_6));
+	assert_true(0 > gpio_request_pin((gpio_man_t*)1, GPIOE, 0));
+	assert_true(0 > gpio_request_pin((gpio_man_t*)1, GPIOE, 6));
+}
+
+void test_gpio_request_success_and_fail_no_twice(void** state) {		// This is a test case
+
+	gpio_man_t man;												// set up the stage
+	gpio_man_init(&man);
 
 	EXPECT(_gpio_clk_enable, index, _gpio_reg2index(GPIOE));	// set expected argument value passing to mock
 	RETURN(_gpio_clk_enable, 0);								// set value mock func should return
 
-	gpio_clk_get(&clk, GPIOE, GPIO_PIN_6);		// call function under test
-
-	assert_true(gpio_clk_status(&clk, GPIOE, GPIO_PIN_6) == 1);	// assert successful state
-
-	MOCHA_OFF(_gpio_clk_enable);				// turn off mocking function for _gpio_clk_enable
+	assert_true(0 == gpio_request_pin(&man, GPIOE, GPIO_PIN_6));	// call function under test
+	assert_true(1 == gpio_pin_in_use(&man, GPIOE, GPIO_PIN_6));		// assert successful state
+	assert_true(0 > gpio_request_pin(&man, GPIOE, GPIO_PIN_6));		// do it twice, should fail.
 }
 
-MOCHA(int, _gpio_clk_disable, int index) {
+void test_gpio_release_invalid_args(void** state) {
 
-	MOCHA_RETURN(_gpio_clk_disable, index);
+	assert_true(0 > gpio_release_pin(NULL, GPIOE, GPIO_PIN_6));
+	assert_true(0 > gpio_release_pin((gpio_man_t*)1, (GPIO_TypeDef*)0xDEADBEEF, GPIO_PIN_6));
+	assert_true(0 > gpio_release_pin((gpio_man_t*)1, GPIOE, 0));
+	assert_true(0 > gpio_release_pin((gpio_man_t*)1, GPIOE, 6));
+}
 
-	check_expected(index);
-	return mock();
+void test_gpio_release_fail_not_in_use(void** state) {
+
+	gpio_man_t man;
+	gpio_man_init(&man);
+
+	assert_true(0 > gpio_release_pin(&man, GPIOE, GPIO_PIN_6));
+}
+
+void test_gpio_release_success(void** state) {
+
+	gpio_man_t man;
+	gpio_man_init(&man);
+
+	EXPECT(_gpio_clk_enable, index, _gpio_reg2index(GPIOE));
+	RETURN(_gpio_clk_enable, 0);
+
+	EXPECT(_gpio_clk_disable, index, _gpio_reg2index(GPIOE));
+	RETURN(_gpio_clk_disable, 0);
+
+	gpio_request_pin(&man, GPIOE, GPIO_PIN_6);
+
+	assert_true(0 == gpio_release_pin(&man, GPIOE, GPIO_PIN_6));
+	assert_true(0 == gpio_pin_in_use(&man, GPIOE, GPIO_PIN_6));
+}
+
+/*
+ *	This test case intends to make sure clock enabled exactly once and not disabled.
+ */
+void test_gpio_request_twice_release_once(void ** state) {
+
+	gpio_man_t man;
+	gpio_man_init(&man);
+
+	EXPECT(_gpio_clk_enable, index, _gpio_reg2index(GPIOE));
+	RETURN(_gpio_clk_enable, 0);
+
+	assert_true(0 == gpio_request_pin(&man, GPIOE, GPIO_PIN_6));
+	assert_true(0 == gpio_request_pin(&man, GPIOE, GPIO_PIN_9));
+	assert_true(0 == gpio_release_pin(&man, GPIOE, GPIO_PIN_6));
 }
 
 void test_alloc_gpio_handle_success(void **state) {
 
 	gpio_config_t conf;
-	gpio_clock_t clk;
+	gpio_man_t clk;
 
 	memset(&conf, 0xA5, sizeof(conf));
 	memset(&clk, 0xB5, sizeof(clk));
-	gpio_handle_t* h = alloc_gpio_handle(&conf, &clk);
+	gpio_handle_t* h = gpio_create_handle(&conf, &clk);
 
 	assert_non_null(h);
 	assert_int_equal(conf.instance, h->instance);
 	assert_memory_equal(&conf.init, &h->init, sizeof(conf.init));
-	assert_int_equal(&clk, h->clk);
+	assert_int_equal(&clk, h->man);
 
 	free(h);
 }
@@ -112,21 +194,21 @@ void test_alloc_gpio_handle_success(void **state) {
 void test_alloc_gpio_handle_invalid_args(void **state) {
 
 	gpio_config_t conf;
-	gpio_clock_t clk;
+	gpio_man_t clk;
 
 	gpio_handle_t* h = 0;
 
-	h = alloc_gpio_handle(0, &clk);
+	h = gpio_create_handle(0, &clk);
 	assert_null(h);
 
-	h = alloc_gpio_handle(&conf, 0);
+	h = gpio_create_handle(&conf, 0);
 	assert_null(h);
 }
 
 void test_gpioex_init_invalid_args(void **state) {
 
 	int ret;
-	gpio_clock_t	clk;
+	gpio_man_t	clk;
 
 	const gpio_config_t* config = &PC6_As_Uart6Tx_DefaultConfig;
 	gpio_handle_t 						ge;
@@ -150,8 +232,19 @@ int run_tests_gpio(void) {
 
 	const UnitTest tests[] = {
 
-		unit_test(test_gpio_clk_get),
-		unit_test(test_gpioex_init_invalid_args),
+		unit_test_setup_teardown(test_gpio_man_init_success, setup, teardown),
+		unit_test_setup_teardown(test_gpio_man_init_fail, setup, teardown),
+
+		unit_test_setup_teardown(test_gpio_request_invalid_args, setup, teardown),
+		unit_test_setup_teardown(test_gpio_request_success_and_fail_no_twice, setup, teardown),
+
+		unit_test_setup_teardown(test_gpio_release_invalid_args, setup, teardown),
+		unit_test_setup_teardown(test_gpio_release_fail_not_in_use, setup, teardown),
+		unit_test_setup_teardown(test_gpio_release_success, setup, teardown),
+
+		unit_test_setup_teardown(test_gpio_request_twice_release_once, setup, teardown),
+
+		unit_test_setup_teardown(test_gpioex_init_invalid_args, setup, teardown),
 
 		unit_test(test_alloc_gpio_handle_success),
 		unit_test(test_alloc_gpio_handle_invalid_args),

@@ -65,32 +65,14 @@ UARTEX_HandleTypeDef* msp_create_uartex_handle(struct msp_factory* msp, const UA
 	/** validate object **/
 	if (msp == NULL || msp->dma_clk == NULL || msp->gpio_clk == NULL || msp->irq_registry == NULL || msp->create_dmaex_handle == NULL || cfg == NULL)
 		return NULL;
-	
-	rxpinH = malloc(sizeof(*rxpinH));
-	if (rxpinH == NULL) { 
-		errno = ENOMEM;
+
+	rxpinH = gpio_create_handle(cfg->rxpin, msp->gpio_clk);
+	if (rxpinH == NULL)
 		goto fail0;
-	}
 	
-	ret = msp->gpioex_init_by_config(rxpinH, cfg->rxpin, msp->gpio_clk);
-	if (ret != 0) {
-		errno = -ret;
-		goto fail1;
-	}
-	
-	txpinH = malloc(sizeof(*txpinH));
+	txpinH = gpio_create_handle(cfg->txpin, msp->gpio_clk);
 	if (txpinH == NULL)
-	{
-		errno = ENOMEM;
 		goto fail1;
-	}
-	
-	ret = msp->gpioex_init_by_config(txpinH, cfg->txpin, msp->gpio_clk);
-	if (ret != 0)
-	{
-		errno = -ret;
-		goto fail2;
-	}
 	
 	if (cfg->dmarx && cfg->dmarx_irq)
 	{
@@ -143,8 +125,8 @@ UARTEX_HandleTypeDef* msp_create_uartex_handle(struct msp_factory* msp, const UA
 	fail5:	if (cfg->uart_irq) free(irqH);
 	fail4:	if (cfg->dmarx && cfg->dmatx_irq) msp->destroy_dmaex_handle(msp, dmaExTxH); // DMAEX_Handle_FactoryDestroy(dmaExTxH);
 	fail3:	if (cfg->dmatx && cfg->dmarx_irq) msp->destroy_dmaex_handle(msp, dmaExRxH); // DMAEX_Handle_FactoryDestroy(dmaExRxH);
-	fail2: 	free(txpinH);
-	fail1:	free(rxpinH);
+	fail2: 	gpio_destroy_handle(txpinH);
+	fail1:	gpio_destroy_handle(rxpinH);
 	fail0:	return NULL;
 }
 
