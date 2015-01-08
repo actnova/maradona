@@ -74,6 +74,22 @@ MOCHA(int, _gpio_clk_disable, int index) {
 	return mock();
 }
 
+MOCHA(gpio_handle_t*, gpio_create_handle, const gpio_config_t* conf, gpio_man_t* man) {
+
+	MOCHA_RETURN(gpio_create_handle, conf, man);
+	check_expected(conf);
+	check_expected(man);
+	return (gpio_handle_t*)((unsigned int)mock());
+}
+
+MOCHA(int, gpio_destroy_handle, gpio_handle_t* h) {
+
+	MOCHA_RETURN(gpio_destroy_handle, h);
+	check_expected(h);
+	// return mock();
+	return 0;
+}
+
 /*
  * setup and teardown
  */

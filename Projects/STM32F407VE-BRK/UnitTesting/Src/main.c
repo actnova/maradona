@@ -46,6 +46,7 @@ extern void initialise_monitor_handles(void);
 
 extern void board_init(void);
 extern void run_tests_gpio(void);
+extern void run_tests_msp(void);
 
 int main(void) {
 
@@ -55,6 +56,7 @@ int main(void) {
 
 	board_init();
 	run_tests_gpio();
+	run_tests_msp();
 	return 0;
 }
 
